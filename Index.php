@@ -1,6 +1,6 @@
 <?php 
 require_once("ApiConfig.php");
-require_once("AddStock.php");
+require_once("Actions.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,6 +11,14 @@ require_once("AddStock.php");
     <title>Document</title>
 </head>
 <body>
+    Register User
+    <form method="post">
+        Username: <input type="text" name="username"><br>
+        Password: <input type="text" name="password"><br>
+        Email: <input type="text" name="email">
+        <input type="submit" name="registerUser" value="Kullanıcı Ekle">
+    </form>
+    <hr>
     <form method="post">
         Magaza Adı:<input type="text" name="ad"><br>
         Email:<input type="text" name="email"><br>
@@ -18,6 +26,7 @@ require_once("AddStock.php");
         Barcode:<input type="text" name="barcode"><br>
         Stok Adeti: <input type="text" name="stok"><br>
         Birim Fiyatı: <input type="text" name="fiyat"><br>
+        Resim:<input type="text" name="resim">
         <input type="submit" name="addStock" value="Stok Ekle">
     </form>
 </body>

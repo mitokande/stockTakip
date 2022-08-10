@@ -14,10 +14,17 @@ function cloneOrderForm($jotformAPI){
 }
 
 
-function insertStockOrderFormID($jotformAPI,$submissionID,$stockFromID){
+function insertStockFormID($jotformAPI,$submissionID,$stockFormID){
     $result = $jotformAPI->editSubmission($submissionID, array(
-        "<stockorderformid>" => $stockFromID,
+        "<stockformid>" => $stockFormID,
     ));
+    return $result;
+}
+function insertOrderFormID($jotformAPI,$submissionID,$orderFormID){
+    $result = $jotformAPI->editSubmission($submissionID, array(
+        "<orderformid>" => $orderFormID,
+    ));
+    return $result;
 }
 
 function addStock($jotformAPI){

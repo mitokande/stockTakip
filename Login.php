@@ -14,12 +14,12 @@ if ($result)
     echo json_encode("Logged In Successfully");
     return;
 }
-echo "Invalid Credentials";
+echo json_encode("Invalid Credentials");
 return;
 function verifyUserAndPassword($response,$username,$password)
 {
     foreach ($response as $item) {
-        if($item["answers"][5]["answer"] == $username && $item["answers"][6]["answer"] == $password )
+        if($item["answers"][5]["answer"] == $username &&  password_verify($password,$item["answers"][6]["answer"]))
         {
             return true;
         }

@@ -8,7 +8,7 @@ $email = $input["email"];
 $username = $input["username"];
 $password = $input["password"];
 $shop_name = $input["shop_name"];
-$userToken = $secretKey = password_hash("JOTFORM_VERY_VERY_SECRET_KEY,${email}",PASSWORD_BCRYPT);
+$userToken = password_hash("JOTFORM_VERY_VERY_SECRET_KEY,${email}",PASSWORD_BCRYPT);
 $expiry = Date('Y-m-d h:i:s', strtotime('+14 days'));
 
 $response = $jotformAPI->getFormSubmissions("222212597595058");
@@ -19,7 +19,7 @@ if ($result)
        "3" => "5456454645645",
         "4" => "564566545656",
         "5" => $username,
-        "6" => $password,
+        "6" => password_hash($password,PASSWORD_BCRYPT),
         "7" => $email,
         "8" => $shop_name,
         "9" => $userToken,

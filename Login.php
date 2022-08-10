@@ -19,7 +19,7 @@ return;
 function verifyUserAndPassword($response,$username,$password)
 {
     foreach ($response as $item) {
-        if($item["answers"][5]["answer"] == $username &&  password_verify($password,$item["answers"][6]["answer"]))
+        if($item["answers"][5]["answer"] == $username &&  password_verify($password,$item["answers"][6]["answer"]) && $item['status'] == "ACTIVE")
         {
             return true;
         }

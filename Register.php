@@ -30,6 +30,7 @@ if ($result)
 function checkUserExist($response,$username,$email)
 {
     foreach ($response as $item) {
+
         if($item["answers"][5]["answer"] == $username )
         {
             echo json_encode("This username already registered");

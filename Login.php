@@ -9,21 +9,23 @@ $password = $input["password"];
 
 $response = $jotformAPI->getFormSubmissions("222212597595058");
 $result = verifyUserAndPassword($response,$username,$password);
-if ($result)
+if ($result[0])
 {
-    echo json_encode("Logged In Successfully");
-    return;
+    header("Authenticate: ${$result[1]}");
+    echo(json_encode("Logged In Successfully"));
 }
+
 echo json_encode("Invalid Credentials");
 return;
+
 function verifyUserAndPassword($response,$username,$password)
 {
     foreach ($response as $item) {
         if($item["answers"][5]["answer"] == $username &&  password_verify($password,$item["answers"][6]["answer"]))
         {
-            return true;
+            return [true,$item["answers"][9]["answer"]];
         }
     }
-    return false;
+    return [false];
 }
 ?>

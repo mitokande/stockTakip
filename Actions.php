@@ -5,11 +5,11 @@ if(isset($_POST['addStock'])){
 }
 
 function cloneStockForm($jotformAPI){
-    $result = $jotformAPI->cloneForm("222211450234035");
+    $result = $jotformAPI->cloneForm("222202437411037");
     return $result['id'];
 }
 function cloneOrderForm($jotformAPI){
-    $result = $jotformAPI->cloneForm("222202437411037");
+    $result = $jotformAPI->cloneForm("222211450234035");
     return $result['id'];
 }
 

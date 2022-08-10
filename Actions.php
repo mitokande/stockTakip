@@ -16,13 +16,13 @@ function cloneOrderForm($jotformAPI){
 
 function insertStockFormID($jotformAPI,$submissionID,$stockFormID){
     $result = $jotformAPI->editSubmission($submissionID, array(
-        "<stockformid>" => $stockFormID,
+        "3" => $stockFormID,
     ));
     return $result;
 }
 function insertOrderFormID($jotformAPI,$submissionID,$orderFormID){
     $result = $jotformAPI->editSubmission($submissionID, array(
-        "<orderformid>" => $orderFormID,
+        "4" => $orderFormID,
     ));
     return $result;
 }

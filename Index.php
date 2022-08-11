@@ -1,6 +1,6 @@
 <?php 
 require_once("ApiConfig.php");
-require_once("Actions.php");
+require_once("AddStock.php");
 ?>
 <!DOCTYPE html>
 <html lang="en">

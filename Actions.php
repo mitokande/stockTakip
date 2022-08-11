@@ -1,7 +1,9 @@
 <?php 
 
 if(isset($_POST['addStock'])){
-    addStock($jotformAPI);
+    $inputJSON = file_get_contents('php://input');
+    $input = json_decode($inputJSON, TRUE);
+    addStock($jotformAPI,$stockFormID);
 }
 
 function cloneStockForm($jotformAPI){
@@ -27,7 +29,7 @@ function insertOrderFormID($jotformAPI,$submissionID,$orderFormID){
     return $result;
 }
 
-function addStock($jotformAPI){
+function addStock($jotformAPI,$stockFormID){
     
     $submission = array(
         "5" => $_POST['urunAdi'],
@@ -40,7 +42,9 @@ function addStock($jotformAPI){
         "13" => $_POST['email']
     );
 
-    $result = $jotformAPI->createFormSubmission("222202437411037", $submission);
+    // $result = $jotformAPI->createFormSubmission("222202437411037", $submission);
+    $result = $jotformAPI->createFormSubmission($stockFormID, $submission);
+
     print_r($result);
 }
 

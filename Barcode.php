@@ -4,7 +4,7 @@ require_once("Product.php");
 
 
 if(isset($_POST['barcode'])){
-    echo checkBarcode($jotformAPI);
+    echo checkBarcode(getApi());
 }
 
 

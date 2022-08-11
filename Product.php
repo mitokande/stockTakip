@@ -6,6 +6,7 @@ class Product {
     public $barcode;
     public $resim;
     public $fiyat;
+    public $adet;
 
 }
 

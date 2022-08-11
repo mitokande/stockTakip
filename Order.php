@@ -1,5 +1,7 @@
 <?php 
 require_once("ApiConfig.php");
+require_once("Product.php");
+
 require_once("Service/IAuthService.php");
 require_once("Service/AuthManager.php");
 require_once("Entities/User.php");
@@ -11,6 +13,11 @@ if(isset($_POST['addOrder'])){
     $orderFormId = $user->getUserOrderId();
     echo $orderFormId;
     addOrder(getApi(),$orderFormId);
+}else if(isset($_POST['orders'])){
+    $authManager = new AuthManager();
+    $user = $authManager->verifyUserToken($_POST['token']);
+    $orderFormId = $user->getUserOrderId();
+    getOrders(getApi(),$orderFormId);
 }else{
     echo json_encode("Invalid request");
     exit();
@@ -56,4 +63,22 @@ function imageUpload(){
     }
 }
 
+
+function getOrders($jotformAPI,$orderFormId){
+    $orderTable = getApi()->getFormSubmissions($orderFormId);
+    $orders = [];
+    foreach($orderTable as $item){
+        if($item['status'] == "ACTIVE"){
+            $urun = new Product;
+            $urun->urunAdi = $item['answers'][5]['answer'];
+            $urun->barcode = $item['answers'][6]['answer'];
+            $urun->resim = $item['answers'][15]['answer'];
+            $urun->fiyat = $item['answers'][8]['answer'];
+            $urun->adet = $item['answers'][7]['answer'];
+            $orders[] = $urun;
+        }
+    }
+    echo json_encode($orders);
+
+}
 ?>

@@ -1,19 +1,22 @@
 <?php
-class User extends Table {
+class User {
     private $username;
     private $userToken;
     private $email;
     private $shopName;
+    private $userStockId;
+    private $userOrderId;
     private $tokenExpiry;
 
-    public function __construct($username,$userToken,$email,$shopName,$tokenExpiry,$shopName,$tokenExpiry,$userOrderId,$userStockId)
+    public function __construct($username,$userToken,$email,$shopName,$tokenExpiry,$userOrderId,$userStockId)
     {
         $this->username = $username;
         $this->userToken = $userToken;
         $this->email = $email;
         $this->shopName = $shopName;
         $this->tokenExpiry = $tokenExpiry;
-        parent::__constructor($userOrderId,$userStockId);
+        $this->userStockId = $userStockId;
+        $this->userOrderId = $userOrderId;
     }
 
     /**
@@ -96,8 +99,19 @@ class User extends Table {
         $this->tokenExpiry = $tokenExpiry;
     }
 
-    public function current_user()
+    /**
+     * @return mixed
+     */
+    public function getUserOrderId()
     {
+        return $this->userOrderId;
+    }
 
+    /**
+     * @param mixed $userOrderId
+     */
+    public function setUserOrderId($userOrderId): void
+    {
+        $this->userOrderId = $userOrderId;
     }
 }

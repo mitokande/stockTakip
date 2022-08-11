@@ -1,5 +1,6 @@
 <?php
 require_once("ApiConfig.php");
+require_once("Service/AuthManager.php");
 
 $inputJSON = file_get_contents('php://input');
 $input = json_decode($inputJSON, TRUE); //convert JSON
@@ -8,6 +9,12 @@ $email = $input["email"];
 $username = $input["username"];
 $password = $input["password"];
 $shop_name = $input["shop_name"];
+
+$authManager = new AuthManager();
+print_r($authManager->register($username,$email,$password,$shop_name));
+
+
+/*
 $userToken = password_hash("JOTFORM_VERY_VERY_SECRET_KEY,${email}",PASSWORD_BCRYPT);
 $expiry = Date('Y-m-d h:i:s', strtotime('+14 days'));
 
@@ -43,5 +50,5 @@ function checkUserExist($response,$username,$email)
         }
     }
     return true;
-}
+}*/
 ?>

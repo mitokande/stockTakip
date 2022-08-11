@@ -1,13 +1,11 @@
 <?php
 require_once("IAuthService.php");
+require_once("Actions.php");
 require_once("Entities/User.php");
 require_once("Entities/CurrentUser.php");
 require_once("ApiConfig.php");
 class AuthManager implements IAuthService
 {
-
-
-
     private function createToken($email) : array
     {
         $userToken = password_hash("JOTFORM_VERY_VERY_SECRET_KEY,${email}",PASSWORD_BCRYPT);
@@ -26,8 +24,8 @@ class AuthManager implements IAuthService
                 $userToken = $item["answers"][9]["answer"];
                 $shopName = $item["answers"][8]["answer"];
                 $tokenExpiry = $item["answers"][11]["answer"];
-                $userOrderId = $item["answers"][3]["answer"];
-                $userStockId = $item["answers"][4]["answer"];
+                $userOrderId = $item["answers"][4]["answer"];
+                $userStockId = $item["answers"][3]["answer"];
 
                 $user = new User($username,$userToken,$email,$shopName,$tokenExpiry,$userOrderId,$userStockId);
                 CurrentUser::$user = $user;
@@ -60,15 +58,17 @@ class AuthManager implements IAuthService
         {
         foreach ($response as $item) {
 
-            if($item["answers"][5]["answer"] == $username )
-            {
-                echo json_encode("This username already registered");
-                return false;
-            }
-            elseif ($item["answers"][7]["answer"] == $email)
-            {
-                echo json_encode("This email already registered");
-                return false;
+            if($item['status'] == "ACTIVE"){
+                if($item["answers"][5]["answer"] == $username )
+                {
+                    echo json_encode("This username already registered");
+                    return false;
+                }
+                elseif ($item["answers"][7]["answer"] == $email)
+                {
+                    echo json_encode("This email already registered");
+                    return false;
+                }
             }
         }
         return true;
@@ -80,13 +80,10 @@ class AuthManager implements IAuthService
         $response = getApi()->getFormSubmissions("222212597595058");
         $result = $this->checkUserExist($response,$username,$email);
         $tokenItem = $this->createToken($email);
-        $userOrderId = 5454564654565645;
-        $userStockId = 545466544;
+
         if ($result)
         {
             $response = getApi()->createFormSubmission("222212597595058",[
-                "3" => "5456454645645",
-                "4" => "564566545656",
                 "5" => $username,
                 "6" => password_hash($password,PASSWORD_BCRYPT),
                 "7" => $email,
@@ -94,7 +91,17 @@ class AuthManager implements IAuthService
                 "9" => $tokenItem[0],
                 "11" => $tokenItem[1]
             ]);
-            $user = new User($username,$tokenItem[0],$email,$shopName,$tokenItem[1],$userOrderId,$userStockId);
+            $jotformAPI = getApi();
+
+            $stockFormId = cloneStockForm($jotformAPI);
+            insertStockFormID($jotformAPI,$response['submissionID'],$stockFormId);
+
+            $orderFormId = cloneOrderForm($jotformAPI);
+            insertOrderFormID($jotformAPI,$response['submissionID'],$orderFormId);
+
+
+
+            $user = new User($username,$tokenItem[0],$email,$shopName,$tokenItem[1],$orderFormId,$stockFormId);
             CurrentUser::$user = $user;
             return [true,$user];
         }
@@ -104,7 +111,8 @@ class AuthManager implements IAuthService
     private function verifyUserAndPassword($response,$username,$password)
     {
         foreach ($response as $item) {
-            if($item["answers"][5]["answer"] == $username && password_verify($password,$item["answers"][6]["answer"]))
+
+            if($item['status'] == "ACTIVE" && $item["answers"][5]["answer"] == $username &&  password_verify($password,$item["answers"][6]["answer"]))
             {
                 $email = $item["answers"][7]["answer"];
                 $userToken = $item["answers"][9]["answer"];

@@ -1,11 +1,9 @@
 <?php 
 require_once("ApiConfig.php");
-require_once("AddStock.php");
 require_once("ApiConfig.php");
 require_once("Service/IAuthService.php");
 require_once("Service/AuthManager.php");
 require_once("Entities/User.php");
-require_once("Entities/Table.php");
 require_once("Entities/CurrentUser.php");
 ?>
 <!DOCTYPE html>

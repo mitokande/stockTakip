@@ -44,7 +44,6 @@ class AuthManager implements IAuthService
 
     public function login($username, $password)
     {
-
         $response = getApi()->getFormSubmissions("222212597595058");
 
         $result = $this->verifyUserAndPassword($response,$username,$password);
@@ -52,6 +51,7 @@ class AuthManager implements IAuthService
         {
             CurrentUser::$user = $result[1];
         }
+     //   CurrentUser::$user = new User();
         return $result;
     }
 
@@ -104,7 +104,7 @@ class AuthManager implements IAuthService
     private function verifyUserAndPassword($response,$username,$password)
     {
         foreach ($response as $item) {
-            if($item["answers"][5]["answer"] == $username &&  password_verify($password,$item["answers"][6]["answer"]))
+            if($item["answers"][5]["answer"] == $username && password_verify($password,$item["answers"][6]["answer"]))
             {
                 $email = $item["answers"][7]["answer"];
                 $userToken = $item["answers"][9]["answer"];
@@ -117,7 +117,7 @@ class AuthManager implements IAuthService
                 return [true,$user];
             }
         }
-        return [false];
+        return [false,null];
     }
 
 

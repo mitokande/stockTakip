@@ -1,12 +1,12 @@
 <?php
 class User {
-    private $username;
-    private $userToken;
-    private $email;
-    private $shopName;
-    private $userStockId;
-    private $userOrderId;
-    private $tokenExpiry;
+    public $username;
+    public $userToken;
+    public $email;
+    public $shopName;
+    public $userStockId;
+    public $userOrderId;
+    public $tokenExpiry;
 
     public function __construct($username,$userToken,$email,$shopName,$tokenExpiry,$userOrderId,$userStockId)
     {

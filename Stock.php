@@ -1,9 +1,13 @@
 <?php 
 require_once("ApiConfig.php");
+require_once("Service/AuthManager.php");
 
 
 if(isset($_POST['addStock'])){
-    $stockFormID = "222202437411037";
+
+    $authManager = new AuthManager();
+    $user = $authManager->verifyUserToken($_POST['token']);
+    $stockFormID = $user->getUserStockId();
     AddStock($jotformAPI,$stockFormID);
 }else{
     echo json_encode("Invalid request");

@@ -114,4 +114,20 @@ class User {
     {
         $this->userOrderId = $userOrderId;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getUserStockId()
+    {
+        return $this->userStockId;
+    }
+
+    /**
+     * @param mixed $userOrderId
+     */
+    public function setUserStockId($userStockId): void
+    {
+        $this->userStockId = $userStockId;
+    }
 }

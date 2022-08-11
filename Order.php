@@ -1,15 +1,21 @@
 <?php 
 require_once("ApiConfig.php");
-
+require_once("Service/IAuthService.php");
+require_once("Service/AuthManager.php");
+require_once("Entities/User.php");
+require_once("Entities/CurrentUser.php");
 
 if(isset($_POST['addOrder'])){
-    $stockFormID = "222211450234035";
-    AddStock($jotformAPI,$stockFormID);
+    $authManager = new AuthManager();
+    $user = $authManager->verifyUserToken($_POST['token']);
+    $orderFormId = $user->getUserOrderId();
+    echo $orderFormId;
+    addOrder(getApi(),$orderFormId);
 }else{
     echo json_encode("Invalid request");
     exit();
 }
-function addStock($jotformAPI,$stockFormID){
+function addOrder($jotformAPI,$orderFormId){
     
     $image = imageUpload();
 
@@ -18,13 +24,13 @@ function addStock($jotformAPI,$stockFormID){
         "6" => $_POST['barcode'],
         "7" => $_POST['adet'],
         "8" => $_POST['fiyat'],
-        "14" => $image,
-        "15" => $_POST['ad'],
+        "15" => $image,
+        "14" => $_POST['ad'],
         "13" => $_POST['email']
     );
 
     // $result = $jotformAPI->createFormSubmission("222202437411037", $submission);
-    $result = $jotformAPI->createFormSubmission($stockFormID, $submission);
+    $result = $jotformAPI->createFormSubmission($orderFormId, $submission);
 
     print_r($result);
 }

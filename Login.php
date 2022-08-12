@@ -9,12 +9,14 @@ $username = $input["username"];
 $password = $input["password"];
 $authManager = new AuthManager();
 $result = $authManager->login($username,$password);
-if ($result[0])
+if ($result->success)
 {
-    echo json_encode($result[1]);
+    http_response_code(200);
+    echo json_encode($result);
     return;
 }
-echo "Invalid User";
-//echo($authManager->currentUser()->getEmail())
+http_response_code(400);
+echo json_encode($result);
+return;
 
 ?>

@@ -11,5 +11,13 @@ $password = $input["password"];
 $shop_name = $input["shop_name"];
 
 $authManager = new AuthManager();
-json_encode($authManager->register($username,$email,$password,$shop_name))
+$result = $authManager->register($username,$email,$password,$shop_name);
+if ($result->success)
+{
+    http_response_code(200);
+    return;
+}
+http_response_code(400);
+json_encode($result);
+return;
 ?>

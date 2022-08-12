@@ -1,5 +1,5 @@
 <?php 
-require_once("StockController.php");
+require_once("Controllers/StockController.php");
 
 $stockController = new StockController();
 

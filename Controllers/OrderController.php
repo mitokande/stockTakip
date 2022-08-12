@@ -1,6 +1,6 @@
 <?php 
 require_once("ApiConfig.php");
-require_once("Product.php");
+require_once("Entities/Product.php");
 
 require_once("Service/IAuthService.php");
 require_once("Service/AuthManager.php");

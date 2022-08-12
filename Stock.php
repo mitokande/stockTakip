@@ -1,24 +1,28 @@
 <?php 
+require_once("ApiConfig.php");
 require_once("Controllers/StockController.php");
 
 $stockController = new StockController();
+$stockInputJSON = file_get_contents('php://input');
+$stockInput = json_decode($stockInputJSON, TRUE); //convert JSON
 
-if(isset($_POST['addStock'])){
+if($stockInput != null){
 
     $authManager = new AuthManager();
-    $result = $authManager->verifyUserToken($_POST['token']);
+    $result = $authManager->verifyUserToken(getallheaders()['token']);
     if ($result->success)
     {
         $user = $result->data;
         $stockFormID = $user->getUserStockId();
-        echo json_encode($stockController->AddStock($stockFormID));
+        echo json_encode($stockController->AddStock(getApi(),$stockFormID,$stockInput));
         exit();
     }
     echo json_encode($result);
     return;
-}else if(isset($_POST['stocks'])){
+}
     $authManager = new AuthManager();
-    $result = $authManager->verifyUserToken($_POST['token']);
+    $token = getallheaders()['token'];
+    $result = $authManager->verifyUserToken($token);
     if ($result->success)
     {
         $user = $result->data;
@@ -27,10 +31,6 @@ if(isset($_POST['addStock'])){
         exit();
     }
     return json_encode($result);
-    return;
-}else{
-    echo json_encode("Invalid request");
-    exit();
-}
+
 
 ?>

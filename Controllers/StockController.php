@@ -1,5 +1,6 @@
 <?php 
 require_once("ApiConfig.php");
+require_once("Barcode.php");
 require_once("Entities/Product.php");
 require_once("Service/AuthManager.php");
 require_once("Utilities/Result/DataResult.php");
@@ -11,23 +12,29 @@ require_once("Utilities/Result/SuccessDataResult.php");
 
 class StockController{
     
-function addStock($stockFormID): DataResult
+function addStock($jotformAPI,$stockFormID,$stockInput): DataResult
 {
+
+    foreach($stockInput as $stock){
+        $image = checkBarcode($jotformAPI,$stock['barcode'])->data->resim;
+        $authManager = new AuthManager();
+        $user = $authManager->verifyUserToken(getallheaders()['token'])->data;
     
-    $image = $this->imageUpload();
+        $submission = array(
+            "5" => $stock['urunAdi'],
+            "6" => $stock['barcode'],
+            "7" => $stock['stok'],
+            "8" => $stock['fiyat'],
+            "14" => $image,
+            "15" => $user->shopName,
+            "13" => $user->email
+        );
+    
+        // $result = $jotformAPI->createFormSubmission("222202437411037", $submission);
+        $result = getApi()->createFormSubmission($stockFormID, $submission);
+    }
 
-    $submission = array(
-        "5" => $_POST['urunAdi'],
-        "6" => $_POST['barcode'],
-        "7" => $_POST['stok'],
-        "8" => $_POST['fiyat'],
-        "14" => $image,
-        "15" => $_POST['ad'],
-        "13" => $_POST['email']
-    );
-
-    // $result = $jotformAPI->createFormSubmission("222202437411037", $submission);
-    $result = getApi()->createFormSubmission($stockFormID, $submission);
+    
 
     return new SuccessDataResult($result,"Stock added Successfuly");
 }

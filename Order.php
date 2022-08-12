@@ -2,23 +2,30 @@
 
 require_once("Controllers/OrderController.php");
 $orderController = new OrderController();
+$orderInputJSON = file_get_contents('php://input');
+$orderInput = json_decode($orderInputJSON, TRUE); //convert JSON
 
-if(isset($_POST['addOrder'])){
+if($orderInput != null){
     $authManager = new AuthManager();
-    $result = $authManager->verifyUserToken($_POST['token']);
+    $result = $authManager->verifyUserToken(getallheaders()['token']);
     if ($result->success)
     {
         $user = $result->data;
         $orderFormId = $user->getUserOrderId();
         // echo $orderFormId;
-        echo json_encode($orderController->addOrder(getApi(),$orderFormId));
+        echo json_encode($orderController->addOrder(getApi(),$orderFormId,$orderInput));
         exit();
     }
     echo json_encode($result);
     return;
-}else if(isset($_POST['orders'])){
+}
+
+if(isset($_POST['addOrder'])){
+    
+}
     $authManager = new AuthManager();
-    $result = $authManager->verifyUserToken($_POST['token']);
+    $token = getallheaders()['token'];
+    $result = $authManager->verifyUserToken($token);
     if ($result->success)
     {
         $user = $result->data;
@@ -28,8 +35,5 @@ if(isset($_POST['addOrder'])){
     }
     echo json_encode($result);
     return;
-}else{
-    echo json_encode("Invalid request");
-    exit();
-}
+
 ?>

@@ -9,15 +9,15 @@ require_once("Utilities/Result/ErrorDataResult.php");
 require_once("Utilities/Result/SuccessDataResult.php");
 
 if(isset($_POST['barcode'])){
-    echo json_encode(checkBarcode(getApi()));
+    echo json_encode(checkBarcode(getApi(),$_POST['barcode']));
 }
 
 
-function checkBarcode($jotformAPI): DataResult
+function checkBarcode($jotformAPI,$barcode): DataResult
 {
     $barcodeTable = $jotformAPI->getFormSubmissions("222211745912045");
     foreach($barcodeTable as $item){
-        if($item['answers'][4]['answer'] == $_POST['barcode']){
+        if($item['answers'][4]['answer'] == $barcode){
             $urun = new Product;
             $urun->urunAdi = $item['answers'][3]['answer'];
             $urun->barcode = $item['answers'][4]['answer'];

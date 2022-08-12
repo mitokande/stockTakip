@@ -10,8 +10,9 @@ if(isset($_POST['addOrder'])){
     {
         $user = $result->data;
         $orderFormId = $user->getUserOrderId();
-        echo $orderFormId;
-        $orderController->addOrder(getApi(),$orderFormId);
+        // echo $orderFormId;
+        echo json_encode($orderController->addOrder(getApi(),$orderFormId));
+        exit();
     }
     echo json_encode($result);
     return;
@@ -22,7 +23,8 @@ if(isset($_POST['addOrder'])){
     {
         $user = $result->data;
         $orderFormId = $user->getUserOrderId();
-        $orderController->getOrders(getApi(),$orderFormId);
+        echo json_encode($orderController->getOrders(getApi(),$orderFormId));
+        exit();
     }
     echo json_encode($result);
     return;

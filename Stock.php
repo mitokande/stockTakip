@@ -11,8 +11,8 @@ if(isset($_POST['addStock'])){
     {
         $user = $result->data;
         $stockFormID = $user->getUserStockId();
-        $stockController->AddStock($stockFormID);
-        return;
+        echo json_encode($stockController->AddStock($stockFormID));
+        exit();
     }
     echo json_encode($result);
     return;
@@ -23,7 +23,8 @@ if(isset($_POST['addStock'])){
     {
         $user = $result->data;
         $stockFormID = $user->getUserStockId();
-        $stockController->getStocks($stockFormID);
+        echo json_encode($stockController->getStocks($stockFormID));
+        exit();
     }
     return json_encode($result);
     return;

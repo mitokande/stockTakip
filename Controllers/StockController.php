@@ -2,11 +2,17 @@
 require_once("ApiConfig.php");
 require_once("Entities/Product.php");
 require_once("Service/AuthManager.php");
-
+require_once("Utilities/Result/DataResult.php");
+require_once("Utilities/Result/Result.php");
+require_once("Utilities/Result/SuccessResult.php");
+require_once("Utilities/Result/DataResult.php");
+require_once("Utilities/Result/ErrorDataResult.php");
+require_once("Utilities/Result/SuccessDataResult.php");
 
 class StockController{
     
-function addStock($stockFormID){
+function addStock($stockFormID): DataResult
+{
     
     $image = $this->imageUpload();
 
@@ -23,7 +29,7 @@ function addStock($stockFormID){
     // $result = $jotformAPI->createFormSubmission("222202437411037", $submission);
     $result = getApi()->createFormSubmission($stockFormID, $submission);
 
-    echo json_encode($result);
+    return new SuccessDataResult($result,"Stock added Successfuly");
 }
 
 
@@ -42,13 +48,14 @@ function imageUpload(){
     }
 
     // Move the temp image file to the images/ directory
-    if(move_uploaded_file($image_file["tmp_name"],__DIR__ . "/images/" . $image_file["name"])){
-        return __DIR__ . "/images/" . $image_file["name"];
+    if(move_uploaded_file($image_file["tmp_name"],"images/" . $image_file["name"])){
+        return "images/" . $image_file["name"];
     }
 }
 
 
-function getStocks($stockFormId){
+function getStocks($stockFormId) : DataResult
+{
     $stockTable = getApi()->getFormSubmissions($stockFormId);
     $stocks = [];
     foreach($stockTable as $item){
@@ -62,7 +69,8 @@ function getStocks($stockFormId){
             $stocks[] = $urun;
         }
     }
-    echo json_encode($stocks);
+    $result = new SuccessDataResult($stocks,"Stocks listed successfuly");
+    return $result;
 
 }
 }

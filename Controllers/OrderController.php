@@ -1,7 +1,12 @@
 <?php 
 require_once("ApiConfig.php");
 require_once("Entities/Product.php");
-
+require_once("Utilities/Result/DataResult.php");
+require_once("Utilities/Result/Result.php");
+require_once("Utilities/Result/SuccessResult.php");
+require_once("Utilities/Result/DataResult.php");
+require_once("Utilities/Result/ErrorDataResult.php");
+require_once("Utilities/Result/SuccessDataResult.php");
 require_once("Service/IAuthService.php");
 require_once("Service/AuthManager.php");
 require_once("Entities/User.php");
@@ -9,7 +14,8 @@ require_once("Entities/CurrentUser.php");
 
 class OrderController {
 
-    function addOrder($jotformAPI,$orderFormId){
+    function addOrder($jotformAPI,$orderFormId) : DataResult
+    {
     
         $image = $this->imageUpload();
     
@@ -26,8 +32,7 @@ class OrderController {
         // $result = $jotformAPI->createFormSubmission("222202437411037", $submission);
         $result = $jotformAPI->createFormSubmission($orderFormId, $submission);
     
-        echo json_encode($result);
-        exit();
+        return new SuccessDataResult($result,"Order added successfully");
     }
     function imageUpload(){
         $image_file = $_FILES["image"];
@@ -44,11 +49,12 @@ class OrderController {
         }
     
         // Move the temp image file to the images/ directory
-        if(move_uploaded_file($image_file["tmp_name"],__DIR__ . "/images/" . $image_file["name"])){
-            return __DIR__ . "/images/" . $image_file["name"];
+        if(move_uploaded_file($image_file["tmp_name"],"images/" . $image_file["name"])){
+            return "images/" . $image_file["name"];
         }
     }
-    function getOrders($jotformAPI,$orderFormId){
+    function getOrders($jotformAPI,$orderFormId) : DataResult
+    {
         $orderTable = getApi()->getFormSubmissions($orderFormId);
         $orders = [];
         foreach($orderTable as $item){
@@ -62,7 +68,8 @@ class OrderController {
                 $orders[] = $urun;
             }
         }
-        echo json_encode($orders);
+        $result = new SuccessDataResult($orders,"Orders listed succecfully");
+        return $result;
         exit();
     }
 }

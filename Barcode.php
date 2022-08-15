@@ -8,8 +8,12 @@ require_once("Utilities/Result/DataResult.php");
 require_once("Utilities/Result/ErrorDataResult.php");
 require_once("Utilities/Result/SuccessDataResult.php");
 
-if(isset($_POST['barcode'])){
-    echo json_encode(checkBarcode(getApi(),$_POST['barcode']));
+
+$barcodeJSON = file_get_contents('php://input');
+$barcode = json_decode($barcodeJSON, TRUE); //convert JSON
+
+if(!empty($barcode['barcode'])){
+    echo json_encode(checkBarcode(getApi(),$barcode['barcode']));
 }
 
 

@@ -1,5 +1,7 @@
 <?php 
 require_once("ApiConfig.php");
+require_once("Service/AuthManager.php");
+
 require_once("Entities/Product.php");
 require_once("Utilities/Result/DataResult.php");
 require_once("Utilities/Result/Result.php");
@@ -12,10 +14,28 @@ require_once("Utilities/Result/SuccessDataResult.php");
 $barcodeJSON = file_get_contents('php://input');
 $barcode = json_decode($barcodeJSON, TRUE); //convert JSON
 
-if(!empty($barcode['barcode'])){
-    echo json_encode(checkBarcode(getApi(),$barcode['barcode']));
+if($barcode != null){
+    $authManager = new AuthManager();
+    if(!empty(getallheaders()['token'])){
+        $result = $authManager->verifyUserToken(getallheaders()['token']);
+    }
+    if (isset($result) && $result->success)
+    {
+        $user = $result->data;
+        $orderFormId = $user->getUserOrderId();
+        // echo $orderFormId;
+        echo json_encode($orderController->addOrder(getApi(),$orderFormId,$orderInput));
+        exit();
+    }
+    if(!empty($barcode['barcode'])){
+        echo json_encode(checkBarcode(getApi(),$barcode['barcode']));
+    }
 }
 
+
+function addBarcode($jotformAPI,$barcode){
+//not yet implemented
+}
 
 function checkBarcode($jotformAPI,$barcode): DataResult
 {

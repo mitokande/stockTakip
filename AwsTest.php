@@ -7,7 +7,7 @@ if (isset($_FILES['image'])) {
     $temp_file_location = $_FILES['image']['tmp_name'];
 
    $service =  new AwsS3Manager();
-   $result = $service->Upload($temp_file_location);
+   $result = $service->Upload($file_name,$temp_file_location);
    echo json_encode($result);
 }
 

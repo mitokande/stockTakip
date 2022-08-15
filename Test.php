@@ -1,8 +1,8 @@
 <?php 
 require_once('vendor/autoload.php');
 
-$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
-$dotenv->load();
+echo getallheaders()['token'];
+
 
 echo $_ENV["REGION"];
 ?>

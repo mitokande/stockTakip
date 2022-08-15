@@ -1,6 +1,9 @@
 ./vendor
 ./images
 .idea
+./.env
+.env
 
 images
 vendor
+Config/application.json

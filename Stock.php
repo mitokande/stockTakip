@@ -13,6 +13,11 @@ if($stockInput != null){
     {
         $user = $result->data;
         $stockFormID = $user->getUserStockId();
+        if(count($stockInput) == 1){
+            $stockInput = array($stockInput);
+            print_r($stockInput);
+            exit();
+        }
         echo json_encode($stockController->AddStock(getApi(),$stockFormID,$stockInput));
         exit();
     }

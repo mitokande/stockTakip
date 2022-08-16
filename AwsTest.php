@@ -2,9 +2,9 @@
 
 require_once("Service/AwsS3Manager.php");
 
-// if (isset($_FILES['image'])) {
-//     echo awsUploadPhoto();
-// }
+ if (isset($_FILES['image'])) {
+     echo awsUploadPhoto();
+ }
 
 function awsUploadPhoto(){
     $file_name = $_FILES['image']['name'];

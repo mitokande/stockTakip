@@ -12,5 +12,5 @@ function awsUploadPhoto(){
 
    $service =  new AwsS3Manager();
    $result = $service->Upload($file_name,$temp_file_location);
-   return json_encode($result);
+   echo json_encode($result);
 }

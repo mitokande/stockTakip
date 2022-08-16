@@ -40,7 +40,7 @@ function addStock($jotformAPI,$stockFormID,$stockInput): DataResult
         
         // print_r($image);
         $authManager = new AuthManager();
-        $user = $authManager->verifyUserToken(getallheaders()['token'])->data;
+        $user = $authManager->verifyUserToken(getallheaders()['Token'])->data;
     
         $submission = array(
             "5" => $stock['urunAdi'],

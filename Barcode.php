@@ -17,8 +17,8 @@ $barcode = json_decode($barcodeJSON, TRUE); //convert JSON
 
 if(isset($_POST['barcode'])){
     $authManager = new AuthManager();
-    if(!empty(getallheaders()['token'])){
-        $result = $authManager->verifyUserToken(getallheaders()['token']);
+    if(!empty(getallheaders()['Token'])){
+        $result = $authManager->verifyUserToken(getallheaders()['Token']);
     }
     if (isset($result) && $result->success)
     {

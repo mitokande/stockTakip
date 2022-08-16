@@ -9,7 +9,7 @@ $stockInput = json_decode($stockInputJSON, TRUE); //convert JSON
 if($stockInput != null){
 
     $authManager = new AuthManager();
-    $result = $authManager->verifyUserToken(getallheaders()['token']);
+    $result = $authManager->verifyUserToken(getallheaders()['Token']);
     if ($result->success)
     {
         $user = $result->data;
@@ -21,7 +21,7 @@ if($stockInput != null){
     return;
 }
     $authManager = new AuthManager();
-    $token = getallheaders()['token'];
+    $token = getallheaders()['Token'];
     $result = $authManager->verifyUserToken($token);
     if ($result->success)
     {

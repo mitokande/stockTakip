@@ -7,7 +7,7 @@ $orderInput = json_decode($orderInputJSON, TRUE); //convert JSON
 
 if($orderInput != null){
     $authManager = new AuthManager();
-    $result = $authManager->verifyUserToken(getallheaders()['token']);
+    $result = $authManager->verifyUserToken(getallheaders()['Token']);
     if ($result->success)
     {
         $user = $result->data;
@@ -24,7 +24,7 @@ if(isset($_POST['addOrder'])){
     
 }
     $authManager = new AuthManager();
-    $token = getallheaders()['token'];
+    $token = getallheaders()['Token'];
     $result = $authManager->verifyUserToken($token);
     if ($result->success)
     {

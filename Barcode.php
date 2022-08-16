@@ -59,9 +59,8 @@ function addBarcode($jotformAPI,$barcode): DataResult{
 function checkBarcode($jotformAPI,$barcode): DataResult
 {
     $barcodeTable = $jotformAPI->getFormSubmissions("222211745912045");
-    if(!is_countable($barcode) || count($barcode)== 1){
-        $barcode = array(array("barcode"=>$barcode));
-        print_r($barcode)   ;
+    if(count($barcode)== 1){
+        $barcode = array($barcode);
     }
     $urunler = [];
     foreach($barcode as $b){

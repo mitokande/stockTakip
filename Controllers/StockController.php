@@ -1,6 +1,6 @@
 <?php 
 require_once("ApiConfig.php");
-require_once("Barcode.php");
+// require_once("Barcode.php");
 require_once("Entities/Product.php");
 require_once("Service/AuthManager.php");
 require_once("Utilities/Result/DataResult.php");
@@ -11,12 +11,34 @@ require_once("Utilities/Result/ErrorDataResult.php");
 require_once("Utilities/Result/SuccessDataResult.php");
 
 class StockController{
+function checkBarcode($jotformAPI,$barcode): DataResult
+{
+    $barcodeTable = $jotformAPI->getFormSubmissions("222211745912045");
     
+    foreach($barcodeTable as $item){
+        if($item['status'] == "ACTIVE" && $item['answers'][4]['answer'] == $barcode){
+            $urun = new Product;
+            $urun->urunAdi = $item['answers'][3]['answer'];
+            $urun->barcode = $item['answers'][4]['answer'];
+            $urun->resim = $item['answers'][9]['answer'];
+            $urun->fiyat = $item['answers'][8]['answer'];
+            
+        }
+    }
+    return new SuccessDataResult($urun,"Barcode found successfully");
+    exit();
+    
+    
+    return new ErrorDataResult(null,"Barcode does not exist in Table");
+}
+
 function addStock($jotformAPI,$stockFormID,$stockInput): DataResult
 {
 
     foreach($stockInput as $stock){
-        $image = checkBarcode($jotformAPI,$stock['barcode'])->data->resim;
+        $image = $this->checkBarcode($jotformAPI,$stock['barcode'])->data->resim;
+        
+        // print_r($image);
         $authManager = new AuthManager();
         $user = $authManager->verifyUserToken(getallheaders()['token'])->data;
     
@@ -40,25 +62,7 @@ function addStock($jotformAPI,$stockFormID,$stockInput): DataResult
 }
 
 
-function imageUpload(){
-    $image_file = $_FILES["image"];
 
-    // Exit if no file uploaded
-    if (!isset($image_file)) {
-        die('No file uploaded.');
-    }
-
-    // Exit if is not a valid image file
-    $image_type = exif_imagetype($image_file["tmp_name"]);
-    if (!$image_type) {
-        die('Uploaded file is not an image.');
-    }
-
-    // Move the temp image file to the images/ directory
-    if(move_uploaded_file($image_file["tmp_name"],"images/" . $image_file["name"])){
-        return "images/" . $image_file["name"];
-    }
-}
 
 
 function getStocks($stockFormId) : DataResult

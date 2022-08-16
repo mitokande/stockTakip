@@ -1,6 +1,5 @@
 <?php 
 require_once("ApiConfig.php");
-require_once("Barcode.php");
 require_once("Entities/Product.php");
 require_once("Utilities/Result/DataResult.php");
 require_once("Utilities/Result/Result.php");
@@ -14,12 +13,31 @@ require_once("Entities/User.php");
 require_once("Entities/CurrentUser.php");
 
 class OrderController {
-
+    function checkBarcode($jotformAPI,$barcode): DataResult
+    {
+        $barcodeTable = $jotformAPI->getFormSubmissions("222211745912045");
+        
+        foreach($barcodeTable as $item){
+            if($item['status'] == "ACTIVE" && $item['answers'][4]['answer'] == $barcode){
+                $urun = new Product;
+                $urun->urunAdi = $item['answers'][3]['answer'];
+                $urun->barcode = $item['answers'][4]['answer'];
+                $urun->resim = $item['answers'][9]['answer'];
+                $urun->fiyat = $item['answers'][8]['answer'];
+                
+            }
+        }
+        return new SuccessDataResult($urun,"Barcode found successfully");
+        exit();
+        
+        
+        return new ErrorDataResult(null,"Barcode does not exist in Table");
+    }
     function addOrder($jotformAPI,$orderFormId,$orderInput) : DataResult
     {
     
         foreach($orderInput as $order){
-            $image = checkBarcode($jotformAPI,$order['barcode'])->data->resim;
+            $image = $this->checkBarcode($jotformAPI,$order['barcode'])->data->resim;
             $authManager = new AuthManager();
             $user = $authManager->verifyUserToken(getallheaders()['token'])->data;
             $submission = array(

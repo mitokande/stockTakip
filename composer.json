@@ -1,6 +1,6 @@
 {
-    "name": "digitalocean-apps/sample-php",
-    "description": "Sample PHP application for App Platform",
+    "name": "stockTakip",
+    "description": "stockTakip backend for Jotform internship",
     "type": "project",
     "require": {
         "aws/aws-sdk-php": "^3.232",

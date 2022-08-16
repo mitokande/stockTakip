@@ -1,11 +1,6 @@
 <?php
 
 require_once("Service/AwsS3Manager.php");
-
- if (isset($_FILES['image'])) {
-     echo awsUploadPhoto();
- }
-
 function awsUploadPhoto(){
     $file_name = $_FILES['image']['name'];
     $temp_file_location = $_FILES['image']['tmp_name'];

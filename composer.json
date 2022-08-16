@@ -1,6 +1,7 @@
 {
     "require": {
         "aws/aws-sdk-php": "^3.232",
-        "vlucas/phpdotenv": "^5.4"
+        "vlucas/phpdotenv": "^5.4",
+        "php": "^8.0.0"
     }
 }

@@ -45,7 +45,7 @@ function addBarcode($jotformAPI,$barcode): DataResult{
     //     // $result = $jotformAPI->createFormSubmission("222202437411037", $submission);
     //     $result = getApi()->createFormSubmission($stockFormID, $submission);
     
-    $resim = json_decode(awsUploadPhoto())->data;
+    $resim = json_decode(awsUploadPhoto()->data);
     
     $submission = array(
             "3" => $barcode['urunAdi'],

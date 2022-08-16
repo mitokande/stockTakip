@@ -1,7 +1,20 @@
 {
+    "name": "digitalocean-apps/sample-php",
+    "description": "Sample PHP application for App Platform",
+    "type": "project",
     "require": {
         "aws/aws-sdk-php": "^3.232",
         "vlucas/phpdotenv": "^5.4",
         "php": "^8.0.0"
-    }
+    },
+    "authors": [
+        {
+            "name": "Mithat Can Turan",
+            "email": "benmithat18@gmail.com"
+        },
+        {
+            "name": "Berat Yesbek",
+            "email": "beratyesbek@gmail.com"
+        }
+    ]
 }

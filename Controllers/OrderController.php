@@ -39,7 +39,7 @@ class OrderController {
         foreach($orderInput as $order){
             $image = $this->checkBarcode($jotformAPI,$order['barcode'])->data->resim;
             $authManager = new AuthManager();
-            $user = $authManager->verifyUserToken(getallheaders()['token'])->data;
+            $user = $authManager->verifyUserToken(getallheaders()['Token'])->data;
             $submission = array(
                 "5" => $order['urunAdi'],
                 "6" => $order['barcode'],

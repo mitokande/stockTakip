@@ -1,6 +1,6 @@
 {
-    "name": "stockTakip",
-    "description": "stockTakip backend for Jotform internship",
+    "name": "mitokande/stocktakip",
+    "description": "Sample PHP application for App Platform",
     "type": "project",
     "require": {
         "aws/aws-sdk-php": "^3.232",

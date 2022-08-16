@@ -91,7 +91,7 @@ class OrderController {
                 $orders[] = $urun;
             }
         }
-        $result = new SuccessDataResult($orders,"Orders listed succecfully");
+        $result = new SuccessDataResult($orders,"Orders listed successfully");
         return $result;
         exit();
     }

@@ -5,7 +5,10 @@ require_once("Controllers/StockController.php");
 $stockController = new StockController();
 $stockInputJSON = file_get_contents('php://input');
 $stockInput = json_decode($stockInputJSON, TRUE); //convert JSON
-echo getallheaders()["token"];
+//echo getallheaders()["token"];
+foreach (getallheaders() as $name => $value) {
+    echo "$name: $value\n";
+}
 return;
 if($stockInput != null){
 

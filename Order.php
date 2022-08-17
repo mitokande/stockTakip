@@ -3,7 +3,7 @@
 header("Access-Control-Allow-Origin: *");
 header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 header('Access-Control-Allow-Credentials: true');
-header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
+header('Access-Control-Allow-Headers: *');
 require_once("Controllers/OrderController.php");
 require_once("Service/AuthManager.php");
 $orderController = new OrderController();
@@ -12,7 +12,7 @@ $orderInput = json_decode($orderInputJSON, TRUE); //convert JSON
 
 if($orderInput != null){
     $authManager = new AuthManager();
-    $result = $authManager->verifyUserToken(getallheaders()['Token']);
+    $result = $authManager->verifyUserToken("ghhgghhghgghhghghjghjghguu");
     if ($result->success)
     {
         $user = $result->data;

@@ -2,7 +2,7 @@
 header("Access-Control-Allow-Origin: *");
 header('Access-Control-Allow-Credentials: true');
 header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
-header('Access-Control-Allow-Headers:  Origin, X-Requested-With, Content-Type, Accept, Authorization');
+header('Access-Control-Allow-Headers: Token ,Origin, X-Requested-With, Content-Type, Accept, Authorization');
 require_once("ApiConfig.php");
 require_once("Service/AuthManager.php");
 require_once("AwsTest.php");
@@ -21,8 +21,8 @@ $barcode = json_decode($barcodeJSON, TRUE); //convert JSON
 
 if(isset($_POST['barcode'])){
     $authManager = new AuthManager();
-    if(!empty(getallheaders()['Authorization'])){
-        $result = $authManager->verifyUserToken(getallheaders()['Authorization']);
+    if(!empty(getallheaders()['Token'])){
+        $result = $authManager->verifyUserToken(getallheaders()['Token']);
     }
     if (isset($result) && $result->success)
     {

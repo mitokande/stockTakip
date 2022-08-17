@@ -11,8 +11,9 @@ require_once("Service/IAuthService.php");
 require_once("Service/AuthManager.php");
 require_once("Entities/User.php");
 require_once("Entities/CurrentUser.php");
+require_once("Utilities/DependencyResolver/Singleton.php");
+class OrderController{
 
-class OrderController {
     function checkBarcode($jotformAPI,$barcode): DataResult
     {
         $barcodeTable = $jotformAPI->getFormSubmissions("222211745912045");
@@ -32,6 +33,10 @@ class OrderController {
         
         
         return new ErrorDataResult(null,"Barcode does not exist in Table");
+    }
+    public function sayHello() : string
+    {
+        return "Hello World";
     }
     function addOrder($jotformAPI,$orderFormId,$orderInput) : DataResult
     {

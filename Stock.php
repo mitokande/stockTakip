@@ -1,6 +1,7 @@
 <?php
 require_once("ApiConfig.php");
 require_once("Controllers/StockController.php");
+header("Access-Control-Allow-Origin: *");
 
 $stockController = new StockController();
 $stockInputJSON = file_get_contents('php://input');

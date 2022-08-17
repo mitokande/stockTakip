@@ -5,6 +5,8 @@ require_once("Service/IAuthService.php");
 require_once("Service/AuthManager.php");
 require_once("Entities/User.php");
 require_once("Entities/CurrentUser.php");
+header("Access-Control-Allow-Origin: *");
+
 ?>
 <!DOCTYPE html>
 <html lang="en">

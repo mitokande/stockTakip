@@ -1,6 +1,8 @@
 <?php 
 
 require_once("Controllers/OrderController.php");
+header("Access-Control-Allow-Origin: *");
+
 $orderController = new OrderController();
 $orderInputJSON = file_get_contents('php://input');
 $orderInput = json_decode($orderInputJSON, TRUE); //convert JSON

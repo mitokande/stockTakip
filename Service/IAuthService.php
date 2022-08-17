@@ -7,7 +7,7 @@ require_once("Utilities/Result/SuccessResult.php");
 require_once("Utilities/Result/DataResult.php");
 require_once("Utilities/Result/ErrorDataResult.php");
 require_once("Utilities/Result/SuccessDataResult.php");
-interface IAuthService{
+interface IAuthService {
 
     public function login($username,$password) : Result;
 

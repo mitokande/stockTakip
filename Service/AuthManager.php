@@ -9,7 +9,7 @@ require_once("Utilities/Result/SuccessResult.php");
 require_once("Utilities/Result/DataResult.php");
 require_once("Utilities/Result/ErrorDataResult.php");
 require_once("Utilities/Result/SuccessDataResult.php");
-
+require_once("Utilities/DependencyResolver/Singleton.php");
 
 require_once("ApiConfig.php");
 class AuthManager implements IAuthService

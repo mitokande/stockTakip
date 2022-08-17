@@ -1,5 +1,5 @@
 <?php
-
+header("Access-Control-Allow-Origin: *");
 require_once("Service/AwsS3Manager.php");
 function awsUploadPhoto(){
     $file_name = $_FILES['image']['name'];

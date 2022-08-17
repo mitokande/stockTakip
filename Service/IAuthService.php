@@ -15,6 +15,8 @@ interface IAuthService{
 
     public function verifyUserToken($token) : DataResult;
 
+    public function updateUserToken(User $user) : DataResult;
+
     public function currentUser() : User;
 
 }

@@ -1,11 +1,11 @@
 <?php
 require 'vendor/autoload.php';
 require_once("Utilities/UUID/UUID.php");
-require_once("IAwsS3Service.php");
+require_once("IFileService.php");
 require_once("Utilities/Result/SuccessDataResult.php");
 require_once('vendor/autoload.php');
 
-class AwsS3Manager implements IAwsS3Service
+class AwsS3Manager implements IFileService
 {
 
     private Aws\S3\S3Client $client;

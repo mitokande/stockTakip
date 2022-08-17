@@ -1,5 +1,6 @@
 <?php
 class User {
+    public $id;
     public $username;
     public $userToken;
     public $email;
@@ -8,8 +9,9 @@ class User {
     public $userOrderId;
     public $tokenExpiry;
 
-    public function __construct($username,$userToken,$email,$shopName,$tokenExpiry,$userOrderId,$userStockId)
+    public function __construct($id,$username,$userToken,$email,$shopName,$tokenExpiry,$userOrderId,$userStockId)
     {
+        $this->id = $id;
         $this->username = $username;
         $this->userToken = $userToken;
         $this->email = $email;
@@ -18,6 +20,7 @@ class User {
         $this->userStockId = $userStockId;
         $this->userOrderId = $userOrderId;
     }
+
 
     /**
      * @return mixed
@@ -129,5 +132,13 @@ class User {
     public function setUserStockId($userStockId): void
     {
         $this->userStockId = $userStockId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->id;
     }
 }

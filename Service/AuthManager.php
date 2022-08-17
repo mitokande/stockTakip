@@ -32,6 +32,7 @@ class AuthManager implements IAuthService
                 {
                     return new ErrorDataResult(null,"Your session has been expired");
                 }
+                $id = $item["id"];
                 $username = $item["answers"][5]["answer"];
                 $email = $item["answers"][7]["answer"];
                 $userToken = $item["answers"][9]["answer"];
@@ -39,7 +40,7 @@ class AuthManager implements IAuthService
                 $userOrderId = $item["answers"][4]["answer"];
                 $userStockId = $item["answers"][3]["answer"];
 
-                $user = new User($username,$userToken,$email,$shopName,$tokenExpiry,$userOrderId,$userStockId);
+                $user = new User($id,$username,$userToken,$email,$shopName,$tokenExpiry,$userOrderId,$userStockId);
                 CurrentUser::$user = $user;
                 return new SuccessDataResult($user,"Your token is valid");
             }
@@ -57,12 +58,17 @@ class AuthManager implements IAuthService
         $response = getApi()->getFormSubmissions("222212597595058");
 
         $result = $this->verifyUserAndPassword($response,$username,$password);
+
         if ($result->success)
         {
-            CurrentUser::$user = $result->data;
-            return new SuccessDataResult($result->data,"Logged in successfully");
+            $tokenResult = $this->createToken($result->data->getEmail());
+            $result->data->setUserToken($tokenResult[0]);
+            $result->data->setTokenExpiry($tokenResult[1]);
+            $updatedTokenResult = $this->updateUserToken($result->data);
+            CurrentUser::$user = $updatedTokenResult->data;
+            return new SuccessDataResult($updatedTokenResult->data,"Logged in successfully");
         }
-        CurrentUser::$user = new User("","","","","","","");
+        CurrentUser::$user = new User("","","","","","","","");
         return new ErrorDataResult(null,"Invalid Credentials");
     }
 
@@ -114,7 +120,7 @@ class AuthManager implements IAuthService
 
 
 
-            $user = new User($username,$tokenItem[0],$email,$shopName,$tokenItem[1],$orderFormId,$stockFormId);
+            $user = new User(null,$username,$tokenItem[0],$email,$shopName,$tokenItem[1],$orderFormId,$stockFormId);
             CurrentUser::$user = $user;
             return new SuccessDataResult($user,"You has been registered successfully!");
         }
@@ -127,6 +133,7 @@ class AuthManager implements IAuthService
 
             if($item['status'] == "ACTIVE" && $item["answers"][5]["answer"] == $username &&  password_verify($password,$item["answers"][6]["answer"]))
             {
+                $id = $item["id"];
                 $email = $item["answers"][7]["answer"];
                 $userToken = $item["answers"][9]["answer"];
                 $shopName = $item["answers"][8]["answer"];
@@ -134,7 +141,7 @@ class AuthManager implements IAuthService
                 $userOrderId = $item["answers"][3]["answer"];
                 $userStockId = $item["answers"][4]["answer"];
 
-                $user = new User($username,$userToken,$email,$shopName,$tokenExpiry,$userOrderId,$userStockId);
+                $user = new User($id,$username,$userToken,$email,$shopName,$tokenExpiry,$userOrderId,$userStockId);
                 return new SuccessDataResult($user,"Password verified");
             }
         }
@@ -142,6 +149,13 @@ class AuthManager implements IAuthService
     }
 
 
-
+    public function updateUserToken(User $user): DataResult
+    {
+        getApi()->editSubmission($user->id,array(
+            "9" => $user->userToken,
+            "11" => $user->tokenExpiry
+        ));
+        return  new SuccessDataResult($user,"New token has been created successfully");
+    }
 }
 

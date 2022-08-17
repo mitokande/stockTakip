@@ -1,7 +1,10 @@
 <?php
+header("Access-Control-Allow-Origin: *");
+header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
+header('Access-Control-Allow-Credentials: true');
+header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
 require_once("ApiConfig.php");
 require_once("Service/AuthManager.php");
-header("Access-Control-Allow-Origin: *");
 
 $inputJSON = file_get_contents('php://input');
 $input = json_decode($inputJSON, TRUE); //convert JSON

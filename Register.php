@@ -18,11 +18,9 @@ $authManager = new AuthManager();
 $result = $authManager->register($username,$email,$password,$shop_name);
 if ($result->success)
 {
-    http_response_code(200);
     echo json_encode($result);
     return;
 }
-http_response_code(400);
 json_encode($result);
 return;
 ?>

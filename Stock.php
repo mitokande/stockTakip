@@ -1,9 +1,8 @@
 <?php
 header("Access-Control-Allow-Origin: *");
-header('Access-Control-Max-Age: 1000');
+header('Access-Control-Allow-Credentials: true');
 header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
-header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization');
-header('HTTP/1.1 200');
+header('Access-Control-Allow-Headers: Token,Origin, X-Requested-With, Content-Type, Accept');
 require_once("ApiConfig.php");
 require_once("Controllers/StockController.php");
 echo "HELLOOOO "

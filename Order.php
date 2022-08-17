@@ -1,9 +1,9 @@
 <?php
 
 header("Access-Control-Allow-Origin: *");
-header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 header('Access-Control-Allow-Credentials: true');
-header('Access-Control-Allow-Headers:  Content-Type, X-Auth-Token, Authorization, Origin');
+header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Token,Origin, X-Requested-With, Content-Type, Accept');
 require_once("Controllers/OrderController.php");
 require_once("Service/AuthManager.php");
 $orderController = new OrderController();

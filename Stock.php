@@ -6,7 +6,8 @@ header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Ac
 header('HTTP/1.1 200');
 require_once("ApiConfig.php");
 require_once("Controllers/StockController.php");
-
+echo "HELLOOOO "
+/*
 $stockController = new StockController();
 $stockInputJSON = file_get_contents('php://input');
 $stockInput = json_decode($stockInputJSON, TRUE); //convert JSON
@@ -37,5 +38,5 @@ if ($result->success)
 }
 return json_encode($result);
 
-
+*/
 ?>

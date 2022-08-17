@@ -11,7 +11,7 @@ $input = json_decode($inputJSON, TRUE); //convert JSON
 
 $username = $input["username"];
 $password = $input["password"];
-$authManager = AuthManager::getInstance();
+$authManager = new AuthManager();
 $result = $authManager->login($username,$password);
 if ($result->success)
 {

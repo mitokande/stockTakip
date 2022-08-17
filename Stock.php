@@ -1,11 +1,11 @@
 <?php
 header("Access-Control-Allow-Origin: *");
-header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
-header('Access-Control-Allow-Credentials: true');
-header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept');
+header('Access-Control-Max-Age: 1000');
+header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
+header('Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Authorization');
+header('HTTP/1.1 200');
 require_once("ApiConfig.php");
 require_once("Controllers/StockController.php");
-require_once("Service/AuthManager.php");
 
 $stockController = new StockController();
 $stockInputJSON = file_get_contents('php://input');

@@ -14,7 +14,7 @@ $username = $input["username"];
 $password = $input["password"];
 $shop_name = $input["shop_name"];
 
-$authManager = AuthManager::getInstance();
+$authManager = new AuthManager();
 $result = $authManager->register($username,$email,$password,$shop_name);
 if ($result->success)
 {

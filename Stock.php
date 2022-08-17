@@ -5,11 +5,11 @@ header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Token,Origin, X-Requested-With, Content-Type, Accept');
 require_once("ApiConfig.php");
 require_once("Controllers/StockController.php");
-echo "HELLOOOO "
-/*
+
 $stockController = new StockController();
 $stockInputJSON = file_get_contents('php://input');
 $stockInput = json_decode($stockInputJSON, TRUE); //convert JSON
+header("Content-Type: application/json; charset=utf-8");
 
 if($stockInput != null){
 
@@ -37,5 +37,5 @@ if ($result->success)
 }
 return json_encode($result);
 
-*/
+
 ?>

@@ -9,6 +9,7 @@ require_once("Service/AuthManager.php");
 $orderController = new OrderController();
 $orderInputJSON = file_get_contents('php://input');
 $orderInput = json_decode($orderInputJSON, TRUE); //convert JSON
+header("Content-Type: application/json; charset=utf-8");
 
 if($orderInput != null){
     $authManager = new AuthManager();

@@ -18,6 +18,7 @@ require_once("Utilities/Result/SuccessDataResult.php");
 
 $barcodeJSON = file_get_contents('php://input');
 $barcode = json_decode($barcodeJSON, TRUE); //convert JSON
+header("Content-Type: application/json; charset=utf-8");
 
 if(isset($_POST['barcode'])){
     $authManager = new AuthManager();

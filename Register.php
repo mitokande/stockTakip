@@ -8,6 +8,7 @@ require_once("Service/AuthManager.php");
 
 $inputJSON = file_get_contents('php://input');
 $input = json_decode($inputJSON, TRUE); //convert JSON
+header("Content-Type: application/json; charset=utf-8");
 
 $email = $input["email"];
 $username = $input["username"];

@@ -3,7 +3,7 @@
 header("Access-Control-Allow-Origin: *");
 header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
 header('Access-Control-Allow-Credentials: true');
-header('Access-Control-Allow-Headers: *');
+header('Access-Control-Allow-Headers:  Content-Type, X-Auth-Token, Authorization, Origin');
 require_once("Controllers/OrderController.php");
 require_once("Service/AuthManager.php");
 $orderController = new OrderController();

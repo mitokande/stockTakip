@@ -14,7 +14,6 @@ require_once("Utilities/Result/SuccessResult.php");
 require_once("Utilities/Result/DataResult.php");
 require_once("Utilities/Result/ErrorDataResult.php");
 require_once("Utilities/Result/SuccessDataResult.php");
-header("Access-Control-Allow-Origin: *");
 
 
 $barcodeJSON = file_get_contents('php://input');

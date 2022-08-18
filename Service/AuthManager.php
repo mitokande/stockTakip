@@ -81,11 +81,11 @@ class AuthManager implements IAuthService
             if($item['status'] == "ACTIVE"){
                 if($item["answers"][5]["answer"] == $username )
                 {
-                    return new ErrorResult("This username has been already registered");
+                    return new ErrorResult("This username has already been registered");
                 }
                 elseif ($item["answers"][7]["answer"] == $email)
                 {
-                    return new ErrorResult("This email has been already registered");
+                    return new ErrorResult("This email has already been registered");
                 }
             }
         }

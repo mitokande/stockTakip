@@ -34,8 +34,23 @@ function checkBarcode($jotformAPI,$barcode): DataResult
 
 function addStock($jotformAPI,$stockFormID,$stockInput): DataResult
 {
-
+    $stockTable = getApi()->getFormSubmissions($stockFormID);
+    $added = [];
     foreach($stockInput as $stock){
+        foreach($stockTable as $item){
+            if($item['status'] == "ACTIVE" && $item['answers'][6]['answer'] == $stock['barcode']){
+                $valA = intval($item['answers'][7]['answer']);
+                $valB = intval($stock['stok']);
+                $result = getApi()->editSubmission($item['id'],array(
+                    '7' => $valA+$valB
+                ));
+                $added[] = $stock['barcode'];
+            }
+        }
+
+        if(in_array($stock['barcode'],$added)){
+            continue;
+        }
         $image = $this->checkBarcode($jotformAPI,$stock['barcode'])->data->resim;
         
         // print_r($image);

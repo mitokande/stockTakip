@@ -38,10 +38,20 @@ class OrderController{
     {
         return "Hello World";
     }
-    function addOrder($jotformAPI,$orderFormId,$orderInput) : DataResult
+    function addOrder($jotformAPI,$orderFormId,$orderInput,$stockFormID) : DataResult
     {
-    
+        $stockTable = getApi()->getFormSubmissions($stockFormID);
+
         foreach($orderInput as $order){
+            foreach($stockTable as $item){
+                if($item['status'] == "ACTIVE" && $item['answers'][6]['answer'] == $order['barcode']){
+                    $valA = intval($item['answers'][7]['answer']);
+                    $valB = intval($order['adet']);
+                    $result = getApi()->editSubmission($item['id'],array(
+                        '7' => $valA-$valB
+                    ));
+                }
+            }
             $image = $this->checkBarcode($jotformAPI,$order['barcode'])->data->resim;
             $authManager = new AuthManager();
             $user = $authManager->verifyUserToken(getallheaders()['Token'])->data;

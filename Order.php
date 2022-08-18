@@ -19,7 +19,9 @@ if($orderInput != null){
     {
         $user = $result->data;
         $orderFormId = $user->getUserOrderId();
-        echo json_encode($orderController->addOrder(getApi(),$orderFormId,$orderInput));
+        $stockFormID = $user->getUserStockId();
+
+        echo json_encode($orderController->addOrder(getApi(),$orderFormId,$orderInput,$stockFormID));
         exit();
     }
     echo json_encode($result);

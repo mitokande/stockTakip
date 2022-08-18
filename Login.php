@@ -4,7 +4,7 @@ header('Access-Control-Allow-Credentials: true');
 header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Token,Origin, X-Requested-With, Content-Type, Accept');
 require_once("ApiConfig.php");
-require_once("Service/AuthManager.php");
+require_once("Utilities/DependencyResolver/AbstractFactory/Factory.php");
 
 $inputJSON = file_get_contents('php://input');
 $input = json_decode($inputJSON, TRUE); //convert JSON
@@ -12,8 +12,8 @@ header("Content-Type: application/json; charset=utf-8");
 
 $username = $input["username"];
 $password = $input["password"];
-$authManager = new AuthManager();
-$result = $authManager->login($username,$password);
+$factory = Factory::getInstance();
+$result = $factory->createAuthManager()->login($username,$password);
 if ($result->success)
 {
     //http_response_code(200);

@@ -17,14 +17,6 @@ header("Access-Control-Allow-Origin: *");
     <title>Document</title>
 </head>
 <body>
-    <form method="post">
-        Magaza Adı:<input type="text" name="ad"><br>
-        Email:<input type="text" name="email"><br>
-        Ürün Adı:<input type="text" name="urunAdi"><br>
-        Barcode:<input type="text" name="barcode"><br>
-        Stok Adeti: <input type="text" name="stok"><br>
-        Birim Fiyatı: <input type="text" name="fiyat"><br>
-        <input type="submit" name="addStock" value="Stok Ekle">
-    </form>
+    <h1>Welcome To Stock API</h1>
 </body>
 </html>

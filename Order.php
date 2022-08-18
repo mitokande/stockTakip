@@ -13,12 +13,12 @@ header("Content-Type: application/json; charset=utf-8");
 
 if($orderInput != null){
     $authManager = new AuthManager();
-    $result = $authManager->verifyUserToken("ghhgghhghgghhghghjghjghguu");
+    $token = getallheaders()['Token'];
+    $result = $authManager->verifyUserToken($token);
     if ($result->success)
     {
         $user = $result->data;
         $orderFormId = $user->getUserOrderId();
-        // echo $orderFormId;
         echo json_encode($orderController->addOrder(getApi(),$orderFormId,$orderInput));
         exit();
     }

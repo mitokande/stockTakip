@@ -8,6 +8,7 @@ require_once("Utilities/Result/Result.php");
 require_once("Utilities/Result/SuccessResult.php");
 require_once("Utilities/Result/DataResult.php");
 require_once("Utilities/Result/ErrorDataResult.php");
+require_once("Utilities/Result/ErrorResult.php");
 require_once("Utilities/Result/SuccessDataResult.php");
 require_once("Utilities/DependencyResolver/Singleton.php");
 
@@ -73,24 +74,22 @@ class AuthManager implements IAuthService
     }
 
 
-    private function checkUserExist($response,$username,$email) :bool
+    private function checkUserExist($response,$username,$email) :Result
         {
         foreach ($response as $item) {
 
             if($item['status'] == "ACTIVE"){
                 if($item["answers"][5]["answer"] == $username )
                 {
-                    echo json_encode("This username already registered");
-                    return false;
+                    return new ErrorResult("This username has been already registered");
                 }
                 elseif ($item["answers"][7]["answer"] == $email)
                 {
-                    echo json_encode("This email already registered");
-                    return false;
+                    return new ErrorResult("This email has been already registered");
                 }
             }
         }
-        return true;
+        return new SuccessResult("");
     }
 
 
@@ -100,7 +99,7 @@ class AuthManager implements IAuthService
         $result = $this->checkUserExist($response,$username,$email);
         $tokenItem = $this->createToken($email);
 
-        if ($result)
+        if ($result->success)
         {
             $response = getApi()->createFormSubmission("222212597595058",[
                 "5" => $username,
@@ -124,7 +123,7 @@ class AuthManager implements IAuthService
             CurrentUser::$user = $user;
             return new SuccessDataResult($user,"You has been registered successfully!");
         }
-        return new ErrorDataResult(null,"You has not been registered");
+        return new ErrorDataResult(null,$result->message);
     }
 
     private function verifyUserAndPassword($response,$username,$password) : DataResult

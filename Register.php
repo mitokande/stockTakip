@@ -17,11 +17,6 @@ $shop_name = $input["shop_name"];
 
 $factory = Factory::getInstance();
 $result = $factory->createAuthManager()->register($username,$email,$password,$shop_name);
-if ($result->success)
-{
-    echo json_encode($result);
-    return;
-}
-json_encode($result);
+echo json_encode($result);
 return;
 ?>

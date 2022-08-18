@@ -53,8 +53,8 @@ class OrderController{
                 }
             }
             $image = $this->checkBarcode($jotformAPI,$order['barcode'])->data->resim;
-            $authManager = new AuthManager();
-            $user = $authManager->verifyUserToken(getallheaders()['Token'])->data;
+            
+            $user = CurrentUser::$user;
             $submission = array(
                 "5" => $order['urunAdi'],
                 "6" => $order['barcode'],

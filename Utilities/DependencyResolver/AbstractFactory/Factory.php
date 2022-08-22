@@ -1,9 +1,13 @@
 <?php
-require_once("Utilities/DependencyResolver/AbstractFactory/IFactory.php");
-require_once("Service/AuthManager.php");
-require_once("Service/AwsS3Manager.php");
-require_once("Service/IAuthService.php");
-require_once("Service/IFileService.php");
+namespace Utilities\DependencyResolver\AbstractFactory;
+
+use Service\AuthManager;
+use Service\AwsS3Manager;
+use Service\IAuthService;
+use Service\IFileService;
+
+require_once("vendor/autoload.php");
+
 
 class Factory implements IFactory
 {

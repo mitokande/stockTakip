@@ -1,6 +1,6 @@
 <?php
-require_once("Utilities/Result/DataResult.php");
-require_once("Utilities/Result/Result.php");
+namespace Utilities\Result;
+
 class SuccessDataResult extends DataResult
 {
     public function __construct($data, $message)

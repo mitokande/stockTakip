@@ -1,24 +1,15 @@
 <?php return array(
     'root' => array(
-        'name' => '__root__',
+        'name' => 'mitokande/stocktakip',
         'pretty_version' => 'dev-master',
         'version' => 'dev-master',
-        'reference' => 'e79d23c975322713ceb1aa9fb273ad5bee53d9ba',
-        'type' => 'library',
+        'reference' => '698acee61391f0593911999774c833fbc2638f53',
+        'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
         'dev' => true,
     ),
     'versions' => array(
-        '__root__' => array(
-            'pretty_version' => 'dev-master',
-            'version' => 'dev-master',
-            'reference' => 'e79d23c975322713ceb1aa9fb273ad5bee53d9ba',
-            'type' => 'library',
-            'install_path' => __DIR__ . '/../../',
-            'aliases' => array(),
-            'dev_requirement' => false,
-        ),
         'aws/aws-crt-php' => array(
             'pretty_version' => 'v1.0.2',
             'version' => '1.0.2.0',
@@ -70,6 +61,15 @@
             'reference' => '13388f00956b1503577598873fffb5ae994b5737',
             'type' => 'library',
             'install_path' => __DIR__ . '/../guzzlehttp/psr7',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'mitokande/stocktakip' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '698acee61391f0593911999774c833fbc2638f53',
+            'type' => 'project',
+            'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
             'dev_requirement' => false,
         ),

@@ -1,18 +1,20 @@
 <?php
-require 'vendor/autoload.php';
-require_once("Utilities/UUID/UUID.php");
-require_once("IFileService.php");
-require_once("Utilities/Result/SuccessDataResult.php");
-require_once('vendor/autoload.php');
+namespace Service;
+require_once("vendor/autoload.php");
+
+use Aws\S3\S3Client;
+use Dotenv\Dotenv;
+use Utilities\Result\DataResult;
+use Utilities\Result\SuccessDataResult;
 
 class AwsS3Manager implements IFileService
 {
 
-    private Aws\S3\S3Client $client;
+    private S3Client $client;
     public function __construct()
     {
 
-        $dotenv = Dotenv\Dotenv::createImmutable(dirname(__DIR__, 1));
+        $dotenv = Dotenv::createImmutable(dirname(__DIR__, 1));
         $dotenv->load();
 
         $region =  $_ENV["REGION"];
@@ -21,7 +23,7 @@ class AwsS3Manager implements IFileService
         $accessKey=  $_ENV["ACCESS_KEY"];
 
 
-        $this->client = new Aws\S3\S3Client([
+        $this->client = new S3Client([
             'region' => $region,
             'version' => $version,
             'credentials' => [

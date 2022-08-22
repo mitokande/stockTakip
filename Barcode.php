@@ -4,38 +4,30 @@ header('Access-Control-Allow-Credentials: true');
 header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Token ,Origin, X-Requested-With, Content-Type, Accept, Authorization');
 require_once("ApiConfig.php");
-require_once("Service/AuthManager.php");
 require_once("AwsTest.php");
 
-require_once("Entities/Product.php");
-require_once("Utilities/Result/DataResult.php");
-require_once("Utilities/Result/Result.php");
-require_once("Utilities/Result/SuccessResult.php");
-require_once("Utilities/Result/DataResult.php");
-require_once("Utilities/Result/ErrorDataResult.php");
-require_once("Utilities/Result/SuccessDataResult.php");
 
 
 $barcodeJSON = file_get_contents('php://input');
 $barcode = json_decode($barcodeJSON, TRUE); //convert JSON
 header("Content-Type: application/json; charset=utf-8");
 
-if (isset($_POST['barcode'])) {
-    $authManager = new AuthManager();
-    if (!empty(getallheaders()['Token'])) {
+if(isset($_POST['barcode'])){
+    $authManager = new Service\AuthManager();
+    if(!empty(getallheaders()['Token'])){
         $result = $authManager->verifyUserToken(getallheaders()['Token']);
     }
-    if (isset($result) && $result->success) {
-        echo json_encode(addBarcode(getApi(), $_POST));
+    if (isset($result) && $result->success)
+    {
+        echo json_encode(addBarcode(getApi(),$_POST));
         exit();
     }
-} else if ($barcode != null) {
-    echo json_encode(checkBarcode(getApi(), $barcode));
+}else if($barcode != null){
+    echo json_encode(checkBarcode(getApi(),$barcode));
 }
 
 
-function addBarcode($jotformAPI, $barcode): DataResult
-{
+function addBarcode($jotformAPI,$barcode): \Utilities\Result\DataResult{
 //not yet implemented
     // $submission = array(
     //         "5" => $stock['urunAdi'],
@@ -59,20 +51,20 @@ function addBarcode($jotformAPI, $barcode): DataResult
         "9" => $resim
     );
     $result = $jotformAPI->createFormSubmission("222211745912045", $submission);
-    return new SuccessDataResult($result, "New Barcode added to the database successfuly");
+    return new \Utilities\Result\SuccessDataResult($result,"New Barcode added to the database successfuly");
 }
 
-function checkBarcode($jotformAPI, $barcode): DataResult
+function checkBarcode($jotformAPI,$barcode): \Utilities\Result\DataResult
 {
     $barcodeTable = $jotformAPI->getFormSubmissions("222211745912045");
-    if (count($barcode) == 1) {
+    if(count($barcode)== 1){
         $barcode = array($barcode);
     }
     $urunler = [];
-    foreach ($barcode as $b) {
-        foreach ($barcodeTable as $item) {
-            if ($item['status'] == "ACTIVE" && $item['answers'][4]['answer'] == $b['barcode']) {
-                $urun = new Product;
+    foreach($barcode as $b){
+        foreach($barcodeTable as $item){
+            if($item['status'] == "ACTIVE" && $item['answers'][4]['answer'] == $b['barcode']){
+                $urun = new Entities\Product;
                 $urun->urunAdi = $item['answers'][3]['answer'];
                 $urun->barcode = $item['answers'][4]['answer'];
                 $urun->resim = $item['answers'][9]['answer'];
@@ -81,11 +73,11 @@ function checkBarcode($jotformAPI, $barcode): DataResult
             }
         }
     }
-    return new SuccessDataResult($urunler, "Barcode found successfully");
+    return new \Utilities\Result\SuccessDataResult($urunler,"Barcode found successfully");
     exit();
 
 
-    return new ErrorDataResult(null, "Barcode does not exist in Table");
+    return new \Utilities\Result\ErrorDataResult(null,"Barcode does not exist in Table");
 }
 
 

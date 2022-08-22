@@ -1,18 +1,9 @@
 <?php
-require_once("IAuthService.php");
-require_once("Actions.php");
-require_once("Entities/User.php");
-require_once("Entities/CurrentUser.php");
-require_once("Utilities/Result/DataResult.php");
-require_once("Utilities/Result/Result.php");
-require_once("Utilities/Result/SuccessResult.php");
-require_once("Utilities/Result/DataResult.php");
-require_once("Utilities/Result/ErrorDataResult.php");
-require_once("Utilities/Result/ErrorResult.php");
-require_once("Utilities/Result/SuccessDataResult.php");
-require_once("Utilities/DependencyResolver/Singleton.php");
-
+namespace Service;
+require_once("vendor/autoload.php");
 require_once("ApiConfig.php");
+
+
 class AuthManager implements IAuthService
 {
     private function createToken($email) : array
@@ -21,7 +12,7 @@ class AuthManager implements IAuthService
         $expiry = Date('Y-m-d h:i:s', strtotime('+14 days'));
         return [$userToken,$expiry];
     }
-    public function verifyUserToken($token) : DataResult
+    public function verifyUserToken($token) : \Utilities\Result\DataResult
     {
         $response = getApi()->getFormSubmissions("222212597595058");
         foreach ($response as $item)
@@ -31,7 +22,7 @@ class AuthManager implements IAuthService
                 $tokenExpiry = $item["answers"][11]["answer"];
                 if ($tokenExpiry<=date("Y-m-d H:i:s"))
                 {
-                    return new ErrorDataResult(null,"Your session has been expired");
+                    return new \Utilities\Result\ErrorDataResult(null,"Your session has been expired");
                 }
                 $id = $item["id"];
                 $username = $item["answers"][5]["answer"];
@@ -41,20 +32,20 @@ class AuthManager implements IAuthService
                 $userOrderId = $item["answers"][4]["answer"];
                 $userStockId = $item["answers"][3]["answer"];
 
-                $user = new User($id,$username,$userToken,$email,$shopName,$tokenExpiry,$userOrderId,$userStockId);
-                CurrentUser::$user = $user;
-                return new SuccessDataResult($user,"Your token is valid");
+                $user = new \Entities\User($id,$username,$userToken,$email,$shopName,$tokenExpiry,$userOrderId,$userStockId);
+                \Entities\CurrentUser::$user = $user;
+                return new \Utilities\Result\SuccessDataResult($user,"Your token is valid");
             }
         }
-        return new ErrorDataResult(null,"Invalid Token");
+        return new \Utilities\Result\ErrorDataResult(null,"Invalid Token");
     }
 
-    public function currentUser(): User
+    public function currentUser(): \Entities\User
     {
-        return CurrentUser::$user;
+        return \Entities\CurrentUser::$user;
     }
 
-    public function login($username, $password) : Result
+    public function login($username, $password) : \Utilities\Result\DataResult
     {
         $response = getApi()->getFormSubmissions("222212597595058");
 
@@ -66,34 +57,34 @@ class AuthManager implements IAuthService
             $result->data->setUserToken($tokenResult[0]);
             $result->data->setTokenExpiry($tokenResult[1]);
             $updatedTokenResult = $this->updateUserToken($result->data);
-            CurrentUser::$user = $updatedTokenResult->data;
-            return new SuccessDataResult($updatedTokenResult->data,"Logged in successfully");
+            \Entities\CurrentUser::$user = $updatedTokenResult->data;
+            return new \Utilities\Result\SuccessDataResult($updatedTokenResult->data,"Logged in successfully");
         }
-        CurrentUser::$user = new User("","","","","","","","");
-        return new ErrorDataResult(null,"Invalid Credentials");
+        \Entities\CurrentUser::$user = new \Entities\User("","","","","","","","");
+        return new \Utilities\Result\ErrorDataResult(null,"Invalid Credentials");
     }
 
 
-    private function checkUserExist($response,$username,$email) :Result
+    private function checkUserExist($response,$username,$email) : \Utilities\Result\Result
         {
         foreach ($response as $item) {
 
             if($item['status'] == "ACTIVE"){
                 if($item["answers"][5]["answer"] == $username )
                 {
-                    return new ErrorResult("This username has already been registered");
+                    return new \Utilities\Result\ErrorResult("This username has already been registered");
                 }
                 elseif ($item["answers"][7]["answer"] == $email)
                 {
-                    return new ErrorResult("This email has already been registered");
+                    return new \Utilities\Result\ErrorResult("This email has already been registered");
                 }
             }
         }
-        return new SuccessResult("");
+        return new \Utilities\Result\SuccessResult("");
     }
 
 
-    public function register($username, $email, $password, $shopName) : DataResult
+    public function register($username, $email, $password, $shopName) : \Utilities\Result\DataResult
     {
         $response = getApi()->getFormSubmissions("222212597595058");
         $result = $this->checkUserExist($response,$username,$email);
@@ -119,14 +110,14 @@ class AuthManager implements IAuthService
 
 
 
-            $user = new User(null,$username,$tokenItem[0],$email,$shopName,$tokenItem[1],$orderFormId,$stockFormId);
-            CurrentUser::$user = $user;
-            return new SuccessDataResult($user,"You has been registered successfully!");
+            $user = new \Entities\User(null,$username,$tokenItem[0],$email,$shopName,$tokenItem[1],$orderFormId,$stockFormId);
+            \Entities\CurrentUser::$user = $user;
+            return new \Utilities\Result\SuccessDataResult($user,"You has been registered successfully!");
         }
-        return new ErrorDataResult(null,$result->message);
+        return new \Utilities\Result\ErrorDataResult(null,$result->message);
     }
 
-    private function verifyUserAndPassword($response,$username,$password) : DataResult
+    private function verifyUserAndPassword($response,$username,$password) : \Utilities\Result\DataResult
     {
         foreach ($response as $item) {
 
@@ -140,21 +131,21 @@ class AuthManager implements IAuthService
                 $userOrderId = $item["answers"][3]["answer"];
                 $userStockId = $item["answers"][4]["answer"];
 
-                $user = new User($id,$username,$userToken,$email,$shopName,$tokenExpiry,$userOrderId,$userStockId);
-                return new SuccessDataResult($user,"Password verified");
+                $user = new \Entities\User($id,$username,$userToken,$email,$shopName,$tokenExpiry,$userOrderId,$userStockId);
+                return new \Utilities\Result\SuccessDataResult($user,"Password verified");
             }
         }
-        return new ErrorDataResult(null,"Password couldn't have verified");
+        return new \Utilities\Result\ErrorDataResult(null,"Password couldn't have verified");
     }
 
 
-    public function updateUserToken(User $user): DataResult
+    public function updateUserToken(\Entities\User $user): \Utilities\Result\DataResult
     {
         getApi()->editSubmission($user->id,array(
             "9" => $user->userToken,
             "11" => $user->tokenExpiry
         ));
-        return  new SuccessDataResult($user,"New token has been created successfully");
+        return  new \Utilities\Result\SuccessDataResult($user,"New token has been created successfully");
     }
 }
 

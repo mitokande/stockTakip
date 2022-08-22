@@ -1,12 +1,11 @@
 <?php
-require_once("AuthManager.php");
-require_once("Entities/User.php");
-require_once("Utilities/Result/DataResult.php");
-require_once("Utilities/Result/Result.php");
-require_once("Utilities/Result/SuccessResult.php");
-require_once("Utilities/Result/DataResult.php");
-require_once("Utilities/Result/ErrorDataResult.php");
-require_once("Utilities/Result/SuccessDataResult.php");
+namespace Service;
+require_once("vendor/autoload.php");
+
+use Entities\User;
+use Utilities\Result\DataResult;
+use Utilities\Result\Result;
+
 interface IAuthService {
 
     public function login($username,$password) : Result;

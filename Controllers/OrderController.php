@@ -1,18 +1,12 @@
 <?php
+namespace Controllers;
+use Entities\CurrentUser;
+use Entities\Product;
+use Utilities\Result\DataResult;
+use Utilities\Result\ErrorDataResult;
+use Utilities\Result\SuccessDataResult;
+require_once("vendor/autoload.php");
 require_once("ApiConfig.php");
-require_once("Entities/Product.php");
-require_once("Utilities/Result/DataResult.php");
-require_once("Utilities/Result/Result.php");
-require_once("Utilities/Result/SuccessResult.php");
-require_once("Utilities/Result/DataResult.php");
-require_once("Utilities/Result/ErrorDataResult.php");
-require_once("Utilities/Result/SuccessDataResult.php");
-require_once("Service/IAuthService.php");
-require_once("Service/AuthManager.php");
-require_once("Entities/User.php");
-require_once("Entities/CurrentUser.php");
-require_once("Utilities/DependencyResolver/Singleton.php");
-
 class OrderController
 {
 

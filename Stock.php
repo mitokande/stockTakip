@@ -11,15 +11,14 @@ $stockInputJSON = file_get_contents('php://input');
 $stockInput = json_decode($stockInputJSON, TRUE); //convert JSON
 header("Content-Type: application/json; charset=utf-8");
 
-if($stockInput != null){
+if ($stockInput != null) {
 
     $authManager = new AuthManager();
     $result = $authManager->verifyUserToken(getallheaders()['Token']);
-    if ($result->success)
-    {
+    if ($result->success) {
         $user = $result->data;
         $stockFormID = $user->getUserStockId();
-        echo json_encode($stockController->AddStock(getApi(),$stockFormID,$stockInput));
+        echo json_encode($stockController->AddStock(getApi(), $stockFormID, $stockInput));
         exit();
     }
     echo json_encode($result);
@@ -28,8 +27,7 @@ if($stockInput != null){
 $authManager = new AuthManager();
 $token = getallheaders()['Token'];
 $result = $authManager->verifyUserToken($token);
-if ($result->success)
-{
+if ($result->success) {
     $user = $result->data;
     $stockFormID = $user->getUserStockId();
     echo json_encode($stockController->getStocks($stockFormID));

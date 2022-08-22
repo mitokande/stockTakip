@@ -13,9 +13,8 @@ header("Content-Type: application/json; charset=utf-8");
 $username = $input["username"];
 $password = $input["password"];
 $factory = Factory::getInstance();
-$result = $factory->createAuthManager()->login($username,$password);
-if ($result->success)
-{
+$result = $factory->createAuthManager()->login($username, $password);
+if ($result->success) {
     //http_response_code(200);
     echo json_encode($result);
     return;

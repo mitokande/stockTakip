@@ -28,7 +28,7 @@ if($orderInput != null){
     return;
 }
 
-if(isset($_POST['addOrder'])){
+if (isset($_POST['addOrder'])) {
     
 }
     $authManager = new AuthManager();

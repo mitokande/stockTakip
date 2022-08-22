@@ -1,4 +1,13 @@
 <?php 
+namespace Controllers;
+
+use Entities\CurrentUser;
+use Entities\Product;
+use Utilities\Result\DataResult;
+use Utilities\Result\ErrorDataResult;
+use Utilities\Result\SuccessDataResult;
+
+require_once("vendor/autoload.php");
 require_once("ApiConfig.php");
 require_once("Entities/Product.php");
 require_once("Utilities/Result/DataResult.php");

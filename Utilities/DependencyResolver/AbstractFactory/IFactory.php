@@ -1,5 +1,10 @@
 <?php
-require_once("Service/IAuthService.php");
+namespace Utilities\DependencyResolver\AbstractFactory;
+
+use Service\IAuthService;
+use Service\IFileService;
+
+require_once("vendor/autoload.php");
 
 interface IFactory
 {

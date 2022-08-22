@@ -1,4 +1,6 @@
 <?php
+namespace Utilities\Result;
+
 require_once("Utilities/Result/Result.php");
 
 class DataResult extends Result

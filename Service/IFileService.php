@@ -1,7 +1,10 @@
 <?php
-require 'vendor/autoload.php';
-require_once("Utilities/UUID/UUID.php");
-require_once("Utilities/Result/DataResult.php");
+namespace Service;
+require_once("vendor/autoload.php");
+
+use Utilities\Result\DataResult;
+
+
 interface IFileService
 {
     function Upload($filename,$tempFileLocation) : DataResult;

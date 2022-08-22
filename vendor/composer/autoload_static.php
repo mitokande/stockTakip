@@ -19,11 +19,16 @@ class ComposerStaticInitd32bbd391971ba23626f8ea93337178a
     );
 
     public static $prefixLengthsPsr4 = array (
+        'U' => 
+        array (
+            'Utilities\\' => 10,
+        ),
         'S' => 
         array (
             'Symfony\\Polyfill\\Php80\\' => 23,
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Polyfill\\Ctype\\' => 23,
+            'Service\\' => 8,
         ),
         'P' => 
         array (
@@ -42,9 +47,17 @@ class ComposerStaticInitd32bbd391971ba23626f8ea93337178a
             'GuzzleHttp\\' => 11,
             'GrahamCampbell\\ResultType\\' => 26,
         ),
+        'E' => 
+        array (
+            'Entities\\' => 9,
+        ),
         'D' => 
         array (
             'Dotenv\\' => 7,
+        ),
+        'C' => 
+        array (
+            'Controllers\\' => 12,
         ),
         'A' => 
         array (
@@ -53,6 +66,10 @@ class ComposerStaticInitd32bbd391971ba23626f8ea93337178a
     );
 
     public static $prefixDirsPsr4 = array (
+        'Utilities\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/Utilities',
+        ),
         'Symfony\\Polyfill\\Php80\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-php80',
@@ -64,6 +81,10 @@ class ComposerStaticInitd32bbd391971ba23626f8ea93337178a
         'Symfony\\Polyfill\\Ctype\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
+        ),
+        'Service\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/Service',
         ),
         'Psr\\Http\\Message\\' => 
         array (
@@ -98,9 +119,17 @@ class ComposerStaticInitd32bbd391971ba23626f8ea93337178a
         array (
             0 => __DIR__ . '/..' . '/graham-campbell/result-type/src',
         ),
+        'Entities\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/Entities',
+        ),
         'Dotenv\\' => 
         array (
             0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
+        ),
+        'Controllers\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/Controllers',
         ),
         'Aws\\' => 
         array (

@@ -1,14 +1,13 @@
 <?php 
+namespace Controllers;
+require_once("vendor/autoload.php");
+use Entities\Product;
+use Service\AuthManager;
+use Utilities\Result\DataResult;
+use Utilities\Result\ErrorDataResult;
+use Utilities\Result\SuccessDataResult;
 require_once("ApiConfig.php");
-// require_once("Barcode.php");
-require_once("Entities/Product.php");
-require_once("Service/AuthManager.php");
-require_once("Utilities/Result/DataResult.php");
-require_once("Utilities/Result/Result.php");
-require_once("Utilities/Result/SuccessResult.php");
-require_once("Utilities/Result/DataResult.php");
-require_once("Utilities/Result/ErrorDataResult.php");
-require_once("Utilities/Result/SuccessDataResult.php");
+
 
 class StockController{
 function checkBarcode($jotformAPI,$barcode): DataResult

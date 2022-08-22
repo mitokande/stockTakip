@@ -1,10 +1,13 @@
 <?php
+require_once("vendor/autoload.php");
+use Controllers\StockController;
+use Service\AuthManager;
+
 header("Access-Control-Allow-Origin: *");
 header('Access-Control-Allow-Credentials: true');
 header('Access-Control-Allow-Methods: GET, PUT, POST, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Token,Origin, X-Requested-With, Content-Type, Accept');
 require_once("ApiConfig.php");
-require_once("Controllers/StockController.php");
 
 $stockController = new StockController();
 $stockInputJSON = file_get_contents('php://input');

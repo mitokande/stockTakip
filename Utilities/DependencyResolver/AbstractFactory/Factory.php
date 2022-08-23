@@ -15,10 +15,12 @@ class Factory implements IFactory
     {
         return new AuthManager();
     }
+
     public function createFileService(): IFileService
     {
         return new AwsS3Manager();
     }
+
     public static function getInstance(): self
     {
         return new Factory();

@@ -29,17 +29,17 @@ if($orderInput != null){
     return;
 }
 
-    $authManager = new Service\AuthManager();
-    $token = getallheaders()['Token'];
-    $result = $factory->createAuthManager()->verifyUserToken($token);
-    if ($result->success)
-    {
-        $user = $result->data;
-        $orderFormId = $user->getUserOrderId();
-        echo json_encode($orderController->getOrders(getApi(),$orderFormId));
-        exit();
-    }
-    echo json_encode($result);
-    return;
+$authManager = new Service\AuthManager();
+$token = getallheaders()['Token'];
+$result = $factory->createAuthManager()->verifyUserToken($token);
+if ($result->success)
+{
+    $user = $result->data;
+    $orderFormId = $user->getUserOrderId();
+    echo json_encode($orderController->getOrders(getApi(),$orderFormId));
+    exit();
+}
+echo json_encode($result);
+return;
 
 ?>

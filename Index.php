@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once("ApiConfig.php");
 
 header("Access-Control-Allow-Origin: *");
@@ -13,6 +13,6 @@ header("Access-Control-Allow-Origin: *");
     <title>Document</title>
 </head>
 <body>
-    <h1>Welcome To Stock API</h1>
+<h1>Welcome To Stock API</h1>
 </body>
 </html>

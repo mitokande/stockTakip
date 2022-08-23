@@ -23,7 +23,7 @@ if(isset($_POST['barcode'])){
         exit();
     }
 }else if($barcode != null){
-        echo json_encode(checkBarcode(getApi(),$barcode));
+    echo json_encode(checkBarcode(getApi(),$barcode));
 }
 
 
@@ -38,17 +38,17 @@ function addBarcode($jotformAPI,$barcode): \Utilities\Result\DataResult{
     //         "15" => $user->shopName,
     //         "13" => $user->email
     //     );
-    
+
     //     // $result = $jotformAPI->createFormSubmission("222202437411037", $submission);
     //     $result = getApi()->createFormSubmission($stockFormID, $submission);
-    
+
     $resim = json_decode(awsUploadPhoto())->data;
-    
+
     $submission = array(
-            "3" => $barcode['urunAdi'],
-            "4" => $barcode['barcode'],
-            "8" => $barcode['fiyat'],
-            "9" => $resim
+        "3" => $barcode['urunAdi'],
+        "4" => $barcode['barcode'],
+        "8" => $barcode['fiyat'],
+        "9" => $resim
     );
     $result = $jotformAPI->createFormSubmission("222211745912045", $submission);
     return new \Utilities\Result\SuccessDataResult($result,"New Barcode added to the database successfuly");
@@ -75,8 +75,8 @@ function checkBarcode($jotformAPI,$barcode): \Utilities\Result\DataResult
     }
     return new \Utilities\Result\SuccessDataResult($urunler,"Barcode found successfully");
     exit();
-    
-    
+
+
     return new \Utilities\Result\ErrorDataResult(null,"Barcode does not exist in Table");
 }
 

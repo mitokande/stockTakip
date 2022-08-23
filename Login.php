@@ -17,11 +17,9 @@ $factory = \Utilities\DependencyResolver\AbstractFactory\Factory::getInstance();
 $result = $factory->createAuthManager()->login($username,$password);
 if ($result->success)
 {
-    //http_response_code(200);
     echo json_encode($result);
     return;
 }
-//http_response_code(400);
 echo json_encode($result);
 return;
 

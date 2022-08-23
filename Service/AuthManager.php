@@ -2,7 +2,7 @@
 namespace Service;
 require_once("vendor/autoload.php");
 require_once("ApiConfig.php");
-
+require_once("Actions.php");
 
 class AuthManager implements IAuthService
 {

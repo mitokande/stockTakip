@@ -20,7 +20,7 @@ $password = $input["password"];
 $shop_name = $input["shop_name"];
 
 $factory = Factory::getInstance();
-$result = $factory->createAuthManager()->register($username,$email,$password,$shop_name);
+$result = $factory->createAuthManager()->register($username, $email, $password, $shop_name);
 echo json_encode($result);
 return;
 ?>

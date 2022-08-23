@@ -34,7 +34,6 @@ class OrderController{
                 $urun->barcode = $item['answers'][4]['answer'];
                 $urun->resim = $item['answers'][9]['answer'];
                 $urun->fiyat = $item['answers'][8]['answer'];
-                
             }
         }
         return new SuccessDataResult($urun,"Barcode found successfully");
@@ -112,6 +111,7 @@ class OrderController{
                 $urun->resim = $item['answers'][14]['answer'];
                 $urun->fiyat = $item['answers'][8]['answer'];
                 $urun->adet = $item['answers'][7]['answer'];
+                $urun->date = $item['created_at'];
                 $orders[] = $urun;
             }
         }

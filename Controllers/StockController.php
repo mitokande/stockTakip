@@ -91,6 +91,7 @@ function getStocks($stockFormId) : DataResult
             $urun->resim = $item['answers'][14]['answer'];
             $urun->fiyat = $item['answers'][8]['answer'];
             $urun->adet = $item['answers'][7]['answer'];
+            $urun->date = $item['created_at'];
             $stocks[] = $urun;
         }
     }

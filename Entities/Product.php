@@ -8,7 +8,7 @@ class Product {
     public $resim;
     public $fiyat;
     public $adet;
-
+    public $date;
 }
 
 ?>

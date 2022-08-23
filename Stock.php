@@ -38,7 +38,7 @@ if ($result->success)
     echo json_encode($stockController->getStocks($stockFormID));
     exit();
 }
-return json_encode($result);
+echo json_encode($result);
 
 
 ?>

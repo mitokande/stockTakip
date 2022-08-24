@@ -86,7 +86,7 @@ function getStocks($stockFormId) : DataResult
             $urun = new Product;
             $urun->urunAdi = $item['answers'][5]['answer'];
             $urun->barcode = $item['answers'][6]['answer'];
-            $urun->resim = $item['answers'][14]['answer'];
+            $urun->resim = $item['answers'][15]['answer'];
             $urun->fiyat = $item['answers'][8]['answer'];
             $urun->adet = $item['answers'][7]['answer'];
             $urun->date = $item['created_at'];

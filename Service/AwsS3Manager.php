@@ -1,11 +1,12 @@
 <?php
 namespace Service;
 require_once("vendor/autoload.php");
-
+require_once("Utilities/UUID/UUID.php");
 use Aws\S3\S3Client;
 use Dotenv\Dotenv;
 use Utilities\Result\DataResult;
 use Utilities\Result\SuccessDataResult;
+
 
 class AwsS3Manager implements IFileService
 {

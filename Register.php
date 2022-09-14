@@ -18,9 +18,9 @@ $email = $input["email"];
 $username = $input["username"];
 $password = $input["password"];
 $shop_name = $input["shop_name"];
-
+$shopCategory = $input['shop_category'];
 $factory = Factory::getInstance();
-$result = $factory->createAuthManager()->register($username, $email, $password, $shop_name);
+$result = $factory->createAuthManager()->register($username, $email, $password, $shop_name, $shopCategory);
 echo json_encode($result);
 return;
 ?>

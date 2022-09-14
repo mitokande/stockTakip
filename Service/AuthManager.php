@@ -17,7 +17,7 @@ class AuthManager implements IAuthService
         $response = getApi()->getFormSubmissions("222212597595058");
         foreach ($response as $item)
         {
-            if($item["answers"][9]["answer"] == $token)
+            if($item["answers"][9]["answer"] == $token && $item['status'] == "ACTIVE")
             {
                 $tokenExpiry = $item["answers"][11]["answer"];
                 if ($tokenExpiry<=date("Y-m-d H:i:s"))
@@ -31,8 +31,10 @@ class AuthManager implements IAuthService
                 $shopName = $item["answers"][8]["answer"];
                 $userOrderId = $item["answers"][4]["answer"];
                 $userStockId = $item["answers"][3]["answer"];
+                $shopCategory = $item["answers"][12]["answer"];
+                $shopCategoryFormId = $item['answers'][13]['answer'];
 
-                $user = new \Entities\User($id,$username,$userToken,$email,$shopName,$tokenExpiry,$userOrderId,$userStockId);
+                $user = new \Entities\User($id,$username,$userToken,$email,$shopName,$tokenExpiry,$userOrderId,$userStockId,$shopCategory,$shopCategoryFormId);
                 \Entities\CurrentUser::$user = $user;
                 return new \Utilities\Result\SuccessDataResult($user,"Your token is valid");
             }
@@ -60,13 +62,13 @@ class AuthManager implements IAuthService
             \Entities\CurrentUser::$user = $updatedTokenResult->data;
             return new \Utilities\Result\SuccessDataResult($updatedTokenResult->data,"Logged in successfully");
         }
-        \Entities\CurrentUser::$user = new \Entities\User("","","","","","","","");
+        \Entities\CurrentUser::$user = new \Entities\User("","","","","","","","","","");
         return new \Utilities\Result\ErrorDataResult(null,"Invalid Credentials");
     }
 
 
     private function checkUserExist($response,$username,$email) : \Utilities\Result\Result
-        {
+    {
         foreach ($response as $item) {
 
             if($item['status'] == "ACTIVE"){
@@ -79,12 +81,13 @@ class AuthManager implements IAuthService
                     return new \Utilities\Result\ErrorResult("This email has already been registered");
                 }
             }
+            return new \Utilities\Result\SuccessResult("It is a new User");
         }
-        return new \Utilities\Result\SuccessResult("");
+        
     }
 
 
-    public function register($username, $email, $password, $shopName) : \Utilities\Result\DataResult
+    public function register($username, $email, $password, $shopName, $shopCategory) : \Utilities\Result\DataResult
     {
         $response = getApi()->getFormSubmissions("222212597595058");
         $result = $this->checkUserExist($response,$username,$email);
@@ -98,7 +101,8 @@ class AuthManager implements IAuthService
                 "7" => $email,
                 "8" => $shopName,
                 "9" => $tokenItem[0],
-                "11" => $tokenItem[1]
+                "11" => $tokenItem[1],
+                "12" => $shopCategory
             ]);
             $jotformAPI = getApi();
 
@@ -108,9 +112,11 @@ class AuthManager implements IAuthService
             $orderFormId = cloneOrderForm($jotformAPI);
             insertOrderFormID($jotformAPI,$response['submissionID'],$orderFormId);
 
+            $shopCategoryFormId = cloneCategoryForm($jotformAPI);
+            insertCategoryFormID($jotformAPI,$response['submissionID'],$shopCategoryFormId);
 
 
-            $user = new \Entities\User(null,$username,$tokenItem[0],$email,$shopName,$tokenItem[1],$orderFormId,$stockFormId);
+            $user = new \Entities\User(null,$username,$tokenItem[0],$email,$shopName,$tokenItem[1],$orderFormId,$stockFormId,$shopCategory,$shopCategoryFormId);
             \Entities\CurrentUser::$user = $user;
             return new \Utilities\Result\SuccessDataResult($user,"You has been registered successfully!");
         }
@@ -130,8 +136,9 @@ class AuthManager implements IAuthService
                 $tokenExpiry = $item["answers"][11]["answer"];
                 $userOrderId = $item["answers"][3]["answer"];
                 $userStockId = $item["answers"][4]["answer"];
-
-                $user = new \Entities\User($id,$username,$userToken,$email,$shopName,$tokenExpiry,$userOrderId,$userStockId);
+                $shopCategory = $item["answers"][12]["answer"];
+                $shopCategoryFormId = $item["answers"][13]["answer"];
+                $user = new \Entities\User($id,$username,$userToken,$email,$shopName,$tokenExpiry,$userOrderId,$userStockId,$shopCategory,$shopCategoryFormId);
                 return new \Utilities\Result\SuccessDataResult($user,"Password verified");
             }
         }

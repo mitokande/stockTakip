@@ -22,6 +22,7 @@ class StockController
                 $urun->barcode = $item['answers'][4]['answer'];
                 $urun->resim = $item['answers'][9]['answer'];
                 $urun->fiyat = $item['answers'][8]['answer'];
+                $urun->category = $item['answers'][16]['answer'];
 
             }
         }
@@ -62,7 +63,8 @@ class StockController
                 "8" => $stock['fiyat'],
                 "14" => $image,
                 "15" => $user->shopName,
-                "13" => $user->email
+                "13" => $user->email,
+                "16" => $stock['category']
             );
 
             // $result = $jotformAPI->createFormSubmission("222202437411037", $submission);
@@ -90,6 +92,7 @@ function getStocks($stockFormId) : DataResult
             $urun->fiyat = $item['answers'][8]['answer'];
             $urun->adet = $item['answers'][7]['answer'];
             $urun->date = $item['created_at'];
+            $urun->category = $item['answers'][16]['answer'];
             $stocks[] = $urun;
         }
     }

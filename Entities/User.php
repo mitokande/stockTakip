@@ -10,8 +10,10 @@ class User {
     public $userStockId;
     public $userOrderId;
     public $tokenExpiry;
+    public $shopCategory;
+    public $shopCategoryFormId;
 
-    public function __construct($id,$username,$userToken,$email,$shopName,$tokenExpiry,$userOrderId,$userStockId)
+    public function __construct($id,$username,$userToken,$email,$shopName,$tokenExpiry,$userOrderId,$userStockId,$shopCategory,$shopCategoryFormId)
     {
         $this->id = $id;
         $this->username = $username;
@@ -21,6 +23,9 @@ class User {
         $this->tokenExpiry = $tokenExpiry;
         $this->userStockId = $userStockId;
         $this->userOrderId = $userOrderId;
+        $this->shopCategory = $shopCategory;
+        $this->shopCategoryFormId = $shopCategoryFormId;
+        
     }
 
 
@@ -142,5 +147,8 @@ class User {
     public function getId()
     {
         return $this->id;
+    }
+    public function getCategoryFormId(){
+        return $this->shopCategoryFormId;
     }
 }

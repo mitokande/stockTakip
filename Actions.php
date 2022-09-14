@@ -13,7 +13,18 @@ function cloneOrderForm($jotformAPI)
     $result = $jotformAPI->cloneForm("222211450234035");
     return $result['id'];
 }
+function cloneCategoryForm($jotformAPI){
+    $result = $jotformAPI->cloneForm("222502035469047");
+    return $result['id'];
+}
 
+
+function insertCategoryFormID($jotformAPI,$submissionID,$categoryFormId){
+    $result = $jotformAPI->editSubmission($submissionID,array(
+        "13" => $categoryFormId,
+    ));
+    return $result;
+}
 
 function insertStockFormID($jotformAPI, $submissionID, $stockFormID)
 {

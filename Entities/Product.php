@@ -9,6 +9,7 @@ class Product {
     public $fiyat;
     public $adet;
     public $date;
+    public $category;
 }
 
 ?>

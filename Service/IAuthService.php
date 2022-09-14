@@ -10,7 +10,7 @@ interface IAuthService {
 
     public function login($username,$password) : Result;
 
-    public function register($username,$email,$password,$shopName) : DataResult;
+    public function register($username,$email,$password,$shopName,$shopCategory) : DataResult;
 
     public function verifyUserToken($token) : DataResult;
 

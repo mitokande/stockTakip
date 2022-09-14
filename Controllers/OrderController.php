@@ -21,6 +21,7 @@ class OrderController
                 $urun->barcode = $item['answers'][4]['answer'];
                 $urun->resim = $item['answers'][9]['answer'];
                 $urun->fiyat = $item['answers'][8]['answer'];
+                $urun->category = $item['answers'][16]['answer'];
             }
         }
         return new SuccessDataResult($urun, "Barcode found successfully");
@@ -59,7 +60,8 @@ class OrderController
                 "8" => $order['fiyat'],
                 "15" => $image,
                 "14" => $user->shopName,
-                "13" => $user->email
+                "13" => $user->email,
+                "16" => $order['category']
             );
             $result = $jotformAPI->createFormSubmission($orderFormId, $submission);
         }
@@ -102,6 +104,7 @@ class OrderController
                 $urun->fiyat = $item['answers'][8]['answer'];
                 $urun->adet = $item['answers'][7]['answer'];
                 $urun->date = $item['created_at'];
+                $urun->category = $item['answers'][16]['answer'];
                 $orders[] = $urun;
             }
         }
